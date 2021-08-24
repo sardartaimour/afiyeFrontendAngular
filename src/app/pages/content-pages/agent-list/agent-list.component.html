@@ -1,0 +1,143 @@
+<!-- Listing Grid View -->
+<section class="our-listing bgc-f7 pb30-991 agent-list  us">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_content style2 mb0-991">
+                    <h2 class="breadcrumb_title text-center">All Agents</h2>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-7 mb-2">
+                <div class="my_profile_setting_input form-group">
+                    <label for="formGroupExampleInput1">Search By Name</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput1" [(ngModel)]="search"
+                        [ngModelOptions]="{standalone: true}" name="first_name" placeholder="">
+                </div>
+            </div>
+            <div class="col-md-5 mt-25 mb-2  text-center">
+                <div class="my_profile_setting_input">
+                    <button class="btn btn2 f-btn btn-success mr-2" type="button" (click)="onFilter()">Filter</button>
+                    <button class="btn btn2" type="button" (click)="onReset()">Reset</button>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12">
+                <div class="row">
+                    <ng-container *ngIf="showLoading">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="demo"></div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="demo"></div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="demo"></div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!showLoading">
+                        <ng-container *ngFor="let row of rows">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="feat_property home7 agent">
+                                    <div class="thumb" (click)="goToAgent(row.id)">
+                                        <img class="img-whp" height="253" width="338"
+                                            [src]="row.profile_media ? row.profile_media.base_path+'/'+row.profile_media.system_name : '../assets/images/avatar.jpg'"
+                                            alt="11.jpg">
+                                    </div>
+                                    <div class="details">
+                                        <div class="tc_content" (click)="goToAgent(row.id)">
+                                            <h4 routerLink="/pages/agent/{{row.id}}" class="float-left">
+                                                {{row?.first_name}} {{row?.last_name}} <img
+                                                    *ngIf="row?.agent_request == 3" src="assets/images/verified.png"
+                                                    alt="Verified">
+                                                <small *ngIf="row?.agent_request == 3">Verified</small></h4>
+
+                                            <p class="float-right pt-1"><i class="fa fa-star"></i>
+                                                {{row.avg_rating ? row.avg_rating : 0.0}}</p>
+
+                                            <ul class="prop_details mb0">
+                                                <li><a href="javascript:void(0);">Total:
+                                                        {{row?.property_count?.total}}</a>
+                                                </li>
+                                                <li><a href="javascript:void(0);">Available Properties:
+                                                        {{row?.property_count?.available}}</a></li>
+                                                <li><a href="javascript:void(0);">For Sale:
+                                                        {{row?.property_count?.sale}}</a>
+                                                </li>
+                                                <li><a href="javascript:void(0);">For Rent:
+                                                        {{row?.property_count?.rent}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="fp_footer">
+                                            <ul class="fp_meta float-left mb0" (click)="openChat(row)">
+                                                Send Message
+                                            </ul>
+                                            <div class="fp_pdate float-right text-thm">
+                                                <a routerLink="/pages/agent/{{row.id}}"
+                                                    routerLinkActive="router-link-active">View
+                                                    Profile <i class="fa fa-angle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+
+
+                    <div class="col-lg-12 mt20">
+                        <div class="mbp_pagination">
+                            <pagination class="custom-pagination" [boundaryLinks]="false"
+                                [customPreviousTemplate]="prevTemplate" [customNextTemplate]="nextTemplate"
+                                [rotate]="rotate" (pageChanged)="pageChanged($event)" [totalItems]="total" [maxSize]="5"
+                                [itemsPerPage]="limit" [ngModelOptions]="{standalone: true}" [(ngModel)]="activePage">
+                            </pagination>
+                            <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+                                <ng-container *ngIf="!disabled">
+                                    <a href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                        <span class="flaticon-left-arrow"></span></a>
+                                </ng-container>
+                                <ng-container *ngIf="disabled">
+                                    <a href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                        <span class="flaticon-left-arrow"></span></a>
+                                </ng-container>
+                            </ng-template>
+
+                            <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+                                <ng-container *ngIf="!disabled">
+                                    <a href="javascript:void(0);"><span class="flaticon-right-arrow"></span></a>
+                                </ng-container>
+                                <ng-container *ngIf="disabled">
+                                    <a href="javascript:void(0);"><span class="flaticon-right-arrow"></span></a>
+                                </ng-container>
+                            </ng-template>
+                            <!-- <ul class="page_navigation">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                        <span class="flaticon-left-arrow"></span> Prev</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="javascript:void(0);">2 <span
+                                            class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0);">...</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0);">29</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:void(0);"><span
+                                            class="flaticon-right-arrow"></span></a>
+                                </li>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-chat-modal></app-chat-modal>

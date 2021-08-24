@@ -1,0 +1,145 @@
+<!-- Our Terms & Conditions -->
+<section class="our-terms bgc-f7 us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb-4 pb-2">
+                    <h2 class="mb-0">{{title}}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4" *ngIf="showFilter">
+                <div class="sidebar_listing_grid1 dn-991">
+                    <app-shared-filter (eventEmitter)="eventEmitter($event)"></app-shared-filter>
+                </div>
+            </div>
+            <div [class.col-md-8]="showFilter" [class.col-md-12]="!showFilter">
+
+                <div class="row">
+                    <ng-container *ngFor="let item of rows">
+                        <div [class.col-md-6]="showFilter" [class.col-md-4]="!showFilter">
+                            <ul class="feature_property_half_clist mb0">
+                                <li class="extrawide list-inline-item w-100 ml-0">
+                                    <div class="feat_property home7 style4 mb-3 mt-3" (click)="goToProperty(item)">
+                                        <div class="thumb">
+                                            <div class="fp_single_item_slider">
+                                                <ng-container *ngIf="item?.media.length > 0">
+                                                    <ng-container *ngFor="let img of item?.media">
+                                                        <div class="item">
+                                                            <img class="img-whp"
+                                                                src="{{img?.base_path+'/'+img?.system_name}}"
+                                                                alt="fp1.jpg">
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="item?.media.length == 0">
+                                                    <div class="item">
+                                                        <img class="img-whp" src="assets/images/defaultd.jpeg"
+                                                            alt="fp1.jpg">
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                            <div class="thmb_cntnt style2">
+                                                <ul class="tag mb0">
+                                                    <li class="list-inline-item  w-p"><a href="javascript:void(0);">{{item?.price | currency: 'GH₵' : 'symbol' : '1.0-0'}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="thmb_cntnt style3">
+                                                <ul class="icon mb0">
+                                                    <li class="list-inline-item" *ngIf="!item.is_favorite"><a
+                                                            (click)="markFavorite(item)"
+                                                            href="javascript:void(0);"><span
+                                                                class="flaticon-heart"></span></a></li>
+
+                                                    <li class="list-inline-item" *ngIf="item.is_favorite == 1"><a
+                                                            (click)="markUnFavorite(item)"
+                                                            href="javascript:void(0);"><span
+                                                                class="fa fa-heart"></span></a></li>
+                                                    <ng-container *ngIf="isManage">
+                                                        <li class="list-inline-item"><a href="javascript:void(0);"
+                                                                (click)="onEdit(item)"><span
+                                                                    class="fa fa-edit"></span></a></li>
+                                                        <li class="list-inline-item"><a href="javascript:void(0);"
+                                                                (click)="deleteProperty(item)"><span
+                                                                    class="fa fa-trash"></span></a></li>
+                                                    </ng-container>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="details">
+                                            <div class="tc_content">
+                                                <h4>
+                                                    <a *ngIf="!route.snapshot.data['isMostFavorite'] && !route.snapshot.data['isFavorite'] "
+                                                        routerLink="/pages/property/{{item?.id}}"
+                                                        href="javascript:void(0);">{{item?.name}}
+                                                    </a>
+                                                    <a *ngIf="route.snapshot.data['isMostFavorite'] || route.snapshot.data['isFavorite']"
+                                                        routerLink="/pages/property/{{item?.property_id}}"
+                                                        href="javascript:void(0);">{{item?.name}}
+                                                    </a>
+                                                </h4>
+                                                <p><span class="flaticon-placeholder"></span> {{item?.address}}</p>
+                                                <ul class="prop_details mb0">
+                                                    <li class="list-inline-item"><a href="javascript:void(0);">Beds:
+                                                            {{item?.no_of_bed_room}}</a>
+                                                    </li>
+                                                    <li class="list-inline-item"><a href="javascript:void(0);">Baths:
+                                                            {{item?.no_of_bath_room}}</a>
+                                                    </li>
+                                                    <li class="list-inline-item"><a href="javascript:void(0);">Sq Ft:
+                                                            {{item?.property_area}}</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </ng-container>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 mt10">
+                        <div class="mbp_pagination">
+                            <pagination class="custom-pagination" [boundaryLinks]="false"
+                                [customPreviousTemplate]="prevTemplate" [customNextTemplate]="nextTemplate"
+                                [maxSize]="5" [rotate]="rotate" (pageChanged)="pageChanged($event)" [totalItems]="total"
+                                [itemsPerPage]="limit" [ngModelOptions]="{standalone: true}" [(ngModel)]="activePage">
+                            </pagination>
+                            <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+                                <ng-container *ngIf="!disabled">
+                                    <a href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                        <span class="flaticon-left-arrow"></span></a>
+                                </ng-container>
+                                <ng-container *ngIf="disabled">
+                                    <a href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                        <span class="flaticon-left-arrow"></span></a>
+                                </ng-container>
+                            </ng-template>
+
+                            <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+                                <ng-container *ngIf="!disabled">
+                                    <a href="javascript:void(0);"><span class="flaticon-right-arrow"></span></a>
+                                </ng-container>
+                                <ng-container *ngIf="disabled">
+                                    <a href="javascript:void(0);"><span class="flaticon-right-arrow"></span></a>
+                                </ng-container>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>

@@ -1,0 +1,50 @@
+.map_modal:before {
+  background-color: rgba(0, 0, 0, .9);
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.map_modal.modal .close:focus{
+  outline: none;
+}
+.map_modal .tab-content .tab-pane.active{
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+// .sign_up_modal .modal-header {
+//   background-color: #3089ed;
+//   border-radius: 50%;
+//   border: none;
+//   height: 50px;
+//   position: absolute;
+//   right: -20px;
+//   text-align: center;
+//   top: -20px;
+//   width: 50px;
+//   z-index: 9;
+// }
+// .sign_up_modal .modal-header button.close{
+//   margin-top: -5px;
+//   margin-right: 0;
+//   margin-left: 4px;
+//   opacity: 1;
+//   padding: 0;
+// }
+// .sign_up_modal .modal-header button.close span{
+//   color: #ffffff;
+// }
+// .sign_up_modal .modal-header button.close span:focus{
+//   border: none;
+//   outline: none;
+//   text-shadow: none;
+// }
+
+::ng-deep .modal-lg, .modal-xl {
+    max-width: 90%;
+}

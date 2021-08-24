@@ -1,0 +1,39 @@
+<div bsModal #appDownloadModal="bs-modal" class="modal fade map_modal" [config]="{backdrop: false}" tabindex="-1" role="dialog"
+     aria-labelledby="dialog-child-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!--<div class="modal-header">
+                <h4 id="dialog-child-name" class="modal-title pull-left">Download App</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>-->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:5px;">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <h4 style="font-weight:bold;font-size:22px; text-align:center;">Download Our App</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        &nbsp;&nbsp;<img class="play-store-svg_popup" src="assets/images/app-play-store.svg"
+                                         alt="play-store" (click)="goToPlayStore()">   &nbsp;&nbsp;
+                        <img (click)="goToAppStore()" class="apple-store-svg_popup" src="assets/images/app-store-apple.svg" alt="store-apple">
+
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

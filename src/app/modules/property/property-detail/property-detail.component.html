@@ -1,0 +1,416 @@
+﻿<!-- Listing Single Property -->
+<section class="listing-title-area mt-5">
+    <div class="container">
+
+        <div class="row mb20">
+            <div class="col-lg-7 col-xl-9">
+                <div class="single_property_title mt30-767">
+                    <h2>{{singleProperty && singleProperty.name ? singleProperty.name:''}}</h2>
+                </div>
+            </div>
+            <div class="col-lg-5 col-xl-3">
+                <div class="single_property_social_share">
+                    <div class="price float-left fn-400">
+                        <h2>{{singleProperty?.price | currency: 'GH₵' : 'symbol' : '1.0-0'}}</h2>
+                    </div>
+                    <div class="spss style2 text-right tal-400">
+                        <ul class="mb0" *ngIf="requestService.isAuthenticated()">
+                            <li *ngIf="singleProperty && singleProperty?.is_favorite == 0"
+                                class="list-inline-item mr-0"><a (click)="markFavorite(singleProperty)"
+                                    href="javascript:void(0);"><span class="flaticon-heart"></span></a></li>
+                            <li *ngIf="singleProperty && singleProperty?.is_favorite == 1"
+                                class="list-inline-item mr-0"><a (click)="markUnFavorite(singleProperty)"
+                                    href="javascript:void(0);"><span class="fa fa-heart"></span></a></li>
+                            <li *ngIf="singleProperty?.user_id == requestService?.getLoggedInUser()?.id"
+                                class="list-inline-item mr-0"><a (click)="onEdit()" href="javascript:void(0);"><span
+                                        class="fa fa-edit"></span></a></li>
+                            <li *ngIf="singleProperty?.user_id == requestService?.getLoggedInUser()?.id"
+                                class="list-inline-item mr-0" (click)="deleteProperty()"><a
+                                    href="javascript:void(0);"><span class="fa fa-trash"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="spls_style_two mb30-520">
+                            <a class="popup-img "
+                               href="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}">
+                                <img class="img-fluid w100 image-side-single"
+                                     src="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"
+                                     alt="1.jpg">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5 col-lg-4">
+                <div class="row">
+                    <ng-container *ngFor="let item of images">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="spls_style_two mb30">
+                                <a class="popup-img"
+                                   href="{{item ? item?.base_path+'/'+item?.system_name :'assets/images/defaultd.jpeg'}}">
+                                    <img class="img-fluid w100 cursor-pointer image-side "
+                                         src="{{item ? item?.base_path+'/'+item?.system_name :'assets/images/defaultd.jpeg'}}"
+                                         alt="3.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="form-group mb0">
+                    <button type="button" class="btn btn-lg btn-thm" (click)="isShowAllImages()">{{showImageBtnText}}</button>
+                </div>                
+            </div>
+        </div>
+                
+            
+        
+    </div>
+</section>
+
+<!-- Agent Single Grid View -->
+<section class="our-agent-single bgc-f7 pb30-991">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="listing_single_description">
+
+                            <h4 class="mb30">Description</h4>
+                            <p class="mb25">{{singleProperty?.description}}.</p>
+
+                            <!-- <div class="collapse" id="collapseExample">
+                                <div class="card card-body">
+                                    <p class="mt10 mb10">Fully furnished. Elegantly appointed condominium unit situated
+                                        on premier location. PS6. The wide entry hall leads to a large living room with
+                                        dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment
+                                        has great windows. Despite the interior views, the apartments Southern and
+                                        Eastern exposures allow for lovely natural light to fill every room. The master
+                                        suite is surrounded by handcrafted milkwork and features incredible walk-in
+                                        closet and storage space.</p>
+                                    <p class="mt10 mb10">Fully furnished. Elegantly appointed condominium unit situated
+                                        on premier location. PS6. The wide entry hall leads to a large living room with
+                                        dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment
+                                        has great windows. Despite the interior views, the apartments Southern and
+                                        Eastern exposures allow for lovely natural light to fill every room. The master
+                                        suite is surrounded by handcrafted milkwork and features incredible walk-in
+                                        closet and storage space.</p>
+                                </div>
+                            </div> -->
+                            <!-- <p class="overlay_close">
+                                <a class="text-thm fz14" data-toggle="collapse" href="#collapseExample" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Show More <span class="flaticon-download-1 fz12"></span>
+                                </a>
+                            </p> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="additional_details">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4 class="mb15">Property Detail</h4>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                    <ul class="">
+                                        <li>
+                                            <p>Type : <span style="margin-left:97px;">{{singleProperty?.type_name}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p>Property Area : <span style="margin-left:39px;">{{singleProperty?.property_area?singleProperty.property_area+' sqft':''}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p>Lot Size : <span style="margin-left:80px;">{{singleProperty?.lot_size?singleProperty.lot_size+' sqft':''}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p>Number of Beds : <span style="margin-left: 30px;">{{singleProperty?.no_of_bed_room}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p>Number of Baths : <span style="margin-left: 25px;">{{singleProperty?.no_of_bath_room}}</span></p>
+                                        </li>
+                                    </ul>
+                                    <!--<ul class="list-inline-item">
+                                        <li>
+                                            <p><span>{{singleProperty?.type_name}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.property_area}} sqft</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.lot_size}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.no_of_bed_room}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.no_of_bath_room}}</span></p>
+                                        </li>
+
+                                    </ul>-->
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                    <ul class="list-inline-item">
+                                        <li>
+                                            <p>Garage :</p>
+                                        </li>
+
+                                        <li>
+                                            <p>Kichen :</p>
+                                        </li>
+                                        <li>
+                                            <p>Pool :</p>
+                                        </li>
+                                        <li>
+                                            <p>Air Conditioner :</p>
+                                        </li>
+                                        <li>
+                                            <p>Garden :</p>
+                                        </li>
+
+                                    </ul>
+                                    <ul class="list-inline-item">
+                                        <li>
+                                            <p><span>{{singleProperty?.garage == 1 ? "Yes":"No"}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.kitchen}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.pool == 1 ? "Yes":"No"}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.air_conditioner}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.garden == 1 ? "Yes":"No"}}</span></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                    <ul class="list-inline-item">
+
+                                        <li>
+                                            <p>Furniture :</p>
+                                        </li>
+                                        <li>
+                                            <p>Category :</p>
+                                        </li>
+                                        <!-- <li>
+                                            <p>Status :</p>
+                                        </li> -->
+                                    </ul>
+                                    <ul class="list-inline-item">
+
+                                        <li>
+                                            <p><span>{{singleProperty?.furniture == 1 ? "Yes":"No"}}</span></p>
+                                        </li>
+                                        <li>
+                                            <p><span>{{singleProperty?.category_name}}</span></p>
+                                        </li>
+                                        <!-- <li>
+                                            <p><span>{{singleProperty?.status_name}}</span></p>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <div class="application_statics mt30 pb-5">
+                            <h4 class="mb30">Property Map Detail </h4>
+                            <div class="property_video p0">
+                                <div class="thumb">
+                                    <div class="h400" id="map-canvas">
+                                        <agm-map [latitude]="singleProperty?.lat" [longitude]="singleProperty?.lng"
+                                            (mapReady)="mapReady($event)" style="height: 350px !important"
+                                            [disableDefaultUI]="true" [mapTypeControl]='true' [zoomControl]="false"
+                                            [zoom]="10">
+
+                                            <agm-marker [latitude]="singleProperty?.lat"
+                                                [longitude]="singleProperty?.lng" [markerDraggable]="false" [iconUrl]="iconObject">
+                                                <agm-info-window>
+                                                    <div class="card">
+                                                        
+                                                        <a routerLink="/pages/property/{{singleProperty?.id}}"
+                                                            class="text-success d_name cursor-pointer">{{singleProperty?.name}}
+                                                        </a>
+                                                        <br>
+                                                        <p class="title">{{singleProperty?.address}}</p>
+                                                    </div>
+                                                </agm-info-window>
+                                            </agm-marker>
+
+
+                                        </agm-map>
+                                    </div>
+
+                                </div>
+                                <h5 class="float-right py-3">{{singleProperty?.address}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-xl-4">
+                <div class="sidebar_listing_list">
+                    <div class="sidebar_advanced_search_widget">
+                        <div class="sl_creator mb-0">
+                            <!-- src="{{singleProperty && singleProperty.user.profile_media  ? singleProperty.user.profile_media ?.base_path+'/'+singleProperty.user.profile_media ?.system_name :'assets/images/defaultd.jpeg'}}" -->
+                            <div class="media pt-2">
+                                <img class="mr-3"
+                                    src="{{singleProperty && singleProperty.user.profile_media  ? singleProperty.user.profile_media ?.base_path+'/'+singleProperty.user.profile_media ?.system_name :'assets/images/defaultd.jpeg'}}"
+                                    height="90" width="90" alt="lc1.png">
+                                <div class="media-body">
+                                    <h5 *ngIf="singleProperty &&  singleProperty?.user"
+                                        class="mt-0 mb0 float-left cursor-pointer"
+                                        routerLink="/pages/agent/{{singleProperty?.user?.id}}"
+                                        routerLinkActive="router-link-active">
+                                        {{singleProperty ? singleProperty?.user?.first_name+" " + singleProperty?.user.last_name : ""}}
+                                    </h5>
+
+                                    <p *ngIf="singleProperty?.user?.agent_request == 3" class="float-right"> <i
+                                            class="fa fa-star"></i>
+                                        {{singleProperty?.user?.avg_rating}}</p>
+                                    <div style="clear: both;">
+                                        <h5 class="mb-0">
+                                            <img *ngIf="singleProperty && singleProperty.user?.agent_request == 3"
+                                                src="assets/images/verified.png" alt="Verified" style="width: 18px;">
+                                            <small>{{singleProperty && singleProperty.user.agent_request == 3 ? "Verified" : "Not Verified"}}</small>
+                                        </h5>
+                                        <button type="button" class="btn btn-secondary mr-1"
+                                            (click)="openChat(singleProperty?.user?.id)"><i class="fa fa-envelope"></i>
+                                            Message </button>
+                                        <button type="button" class="btn btn-primary"
+                                            [popover]="singleProperty?.user?.email" placement="bottom"
+                                            popoverTitle="Agent Email" triggers="click"><i class="fa fa-phone"></i>
+                                            Contact Us</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <h4>Verified Agents</h4>
+                <div class="premium">
+                    <ng-container *ngIf="singleProperty">
+                        <ng-container *ngFor="let item of agents">
+                            <div class="sidebar_listing_list">
+                                <div class="sidebar_advanced_search_widget">
+                                    <div class="sl_creator mb-0" (click)="goToAgent(item.id)">                                        
+                                        <div class="media pt-2">
+                                            <img class="mr-3"
+                                                 src="{{item && item.profile_media  ? item.profile_media ?.base_path+'/'+item.profile_media ?.system_name :'assets/images/defaultd.jpeg'}}"
+                                                 height="90" width="90" alt="lc1.png">
+                                            <div class="media-body">
+                                                <h5 *ngIf="item " class="mt-0 mb0 float-left cursor-pointer"
+                                                    routerLink="/pages/agent/{{item?.id}}"
+                                                    routerLinkActive="router-link-active">
+                                                    {{item ? item?.first_name+" " + item?.last_name : ""}}
+                                                </h5>
+
+                                                <p *ngIf="item?.agent_request == 3" class="float-right">
+                                                    <i class="fa fa-star"></i>
+                                                    {{item?.avg_rating}}
+                                                </p>
+                                                <div style="clear: both;">
+                                                    <ul class="prop_details mb0">
+                                                        <li>
+                                                            <a href="javascript:void(0);">
+                                                                Total:
+                                                                {{item?.property_count?.total}}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);">
+                                                                Available Properties:
+                                                                {{item?.property_count?.available}}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);">
+                                                                For Sale:
+                                                                {{item?.property_count?.sale}}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:void(0);">
+                                                                For Rent:
+                                                                {{item?.property_count?.rent}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </ng-container>
+                        <!--<ng-container *ngFor="let item of singleProperty.paid_users">
+        <div class="sidebar_listing_list">
+            <div class="sidebar_advanced_search_widget">
+                <div class="sl_creator mb-0">-->
+                        <!-- src="{{singleProperty && singleProperty.user.profile_media  ? singleProperty.user.profile_media ?.base_path+'/'+singleProperty.user.profile_media ?.system_name :'assets/images/defaultd.jpeg'}}" -->
+                        <!--<div class="media pt-2">
+                        <img class="mr-3"
+                            src="{{item && item.profile_media  ? item.profile_media ?.base_path+'/'+item.profile_media ?.system_name :'assets/images/defaultd.jpeg'}}"
+                            height="90" width="90" alt="lc1.png">
+                        <div class="media-body">
+                            <h5 *ngIf="item " class="mt-0 mb0 float-left cursor-pointer"
+                                routerLink="/pages/agent/{{item?.id}}"
+                                routerLinkActive="router-link-active">
+                                {{item ? item?.first_name+" " + item?.last_name : ""}}
+                            </h5>
+
+                            <p *ngIf="item?.agent_request == 3" class="float-right"> <i
+                                    class="fa fa-star"></i>
+                                {{item?.avg_rating}}</p>
+                            <div style="clear: both;">
+                                <ul class="prop_details mb0">
+                                    <li><a href="javascript:void(0);">Total:
+                                            {{item?.property_count?.total}}</a>
+                                    </li>
+                                    <li><a href="javascript:void(0);">Available Properties:
+                                            {{item?.property_count?.available}}</a></li>
+                                    <li><a href="javascript:void(0);">For Sale:
+                                            {{item?.property_count?.sale}}</a>
+                                    </li>
+                                    <li><a href="javascript:void(0);">For Rent:
+                                            {{item?.property_count?.rent}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </ng-container>-->
+                    </ng-container>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<app-chat-modal #chatModal></app-chat-modal>

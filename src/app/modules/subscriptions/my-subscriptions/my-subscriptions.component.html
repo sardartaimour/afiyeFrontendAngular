@@ -1,0 +1,91 @@
+<section class="our-blog bgc-f7 pb30 my-subs us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="main-title mb-4 pb-3">
+                    <h2 class="mb-0">My Subscriptions</h2>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="my_profile_setting_input">
+                    <a routerLink="/subscriptions/select-subscription" href="javascript:void(0);"><button
+                            class="btn btn2" type="submit">Add
+                            Subscription</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <ng-container *ngIf="showLoading">
+                <div class="col-md-6 col-lg-4">
+                    <div class="demo"></div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="demo"></div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="demo"></div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!showLoading">
+                <ng-container *ngFor="let item of rows;let i=index">
+                    <div class="col-md-6 col-lg-4 col-xl-4">
+                        <a href="javascript:void(0)">
+                            <div class="for_blog feat_property">
+                                <div class="thumb">
+                                    <img class="img-whp" src="assets/images/type_one_logo.png" alt="bh1.jpg">
+                                </div>
+                                <div class="details">
+                                    <div class="tc_content pb-1">
+                                        <ul class="prop_details mb0">
+                                            <li class="list-inline-item" style="font-size: 14px;">Start Date: <strong>
+                                                    {{item?.start_date | date:"MMM d y"}}</strong> &nbsp; End Date:
+                                                <strong>
+                                                    {{item?.end_date | date:"MMM d y"}}</strong></li>
+                                        </ul>
+                                    </div>
+                                    <div class="fp_footer pt-0 border-top-0">
+                                        <ul class="fp_meta float-left mb0  w-p">
+                                            <li class="list-inline-item">{{item?.total_amount | currency: 'GH₵'}}</li>
+                                        </ul>
+                                        <div class="fp_pdate float-right mt-0">{{item?.duration}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt10">
+                <div class="mbp_pagination">
+                    <pagination class="custom-pagination" [boundaryLinks]="false"
+                        [customPreviousTemplate]="prevTemplate" [customNextTemplate]="nextTemplate" [maxSize]="5"
+                        [rotate]="rotate" (pageChanged)="pageChanged($event)" [totalItems]="total"
+                        [itemsPerPage]="limit" [ngModelOptions]="{standalone: true}" [(ngModel)]="activePage">
+                    </pagination>
+                    <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+                        <ng-container *ngIf="!disabled">
+                            <a href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                <span class="flaticon-left-arrow"></span></a>
+                        </ng-container>
+                        <ng-container *ngIf="disabled">
+                            <a href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+                                <span class="flaticon-left-arrow"></span></a>
+                        </ng-container>
+                    </ng-template>
+
+                    <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+                        <ng-container *ngIf="!disabled">
+                            <a href="javascript:void(0);"><span class="flaticon-right-arrow"></span></a>
+                        </ng-container>
+                        <ng-container *ngIf="disabled">
+                            <a href="javascript:void(0);"><span class="flaticon-right-arrow"></span></a>
+                        </ng-container>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

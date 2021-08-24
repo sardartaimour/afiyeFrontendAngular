@@ -1,0 +1,209 @@
+<div class="sidebar_listing_list style2 mb0">
+    <div class="sidebar_advanced_search_widget">
+        <h4 class="mb25">Advanced Search</h4>
+        <form [formGroup]="form" (ngSubmit)="onFilter()">
+            <ul class="sasw_list mb0">
+                <li class="search_area">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                    </div>
+                </li>
+                <li class="search_area">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Price From" type="number" min="1"
+                            formControlName="from_price">
+                    </div>
+                </li>
+                <li class="search_area">
+                    <div class="form-group">
+                        <input type="number" min="1" class="form-control" placeholder="Price To"
+                            formControlName="to_price">
+                    </div>
+                </li>
+                <li class="search_area">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Lot Size" formControlName="lot_size"
+                            min="1">
+                    </div>
+                </li>
+                <li class="search_area">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Property Area (sqft)"
+                            formControlName="property_area" min="1">
+                    </div>
+                </li>
+
+                <li class="search_area">
+                    <div class="form-group">
+                        <input type="text" class="form-control" (click)="setLocationOnMap()" placeholder="Address"
+                            formControlName="address">
+                        <label for="exampleInputEmail"><span class="flaticon-magnifying-glass"></span></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="property_type_id">
+                                <option [ngValue]=null>Type</option>
+                                <option value="1">Sale</option>
+                                <option value="2">Rent</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="no_of_bed_room">
+                                <option [ngValue]=null>Number of bed</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="+5">+5</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="no_of_bath_room">
+                                <option [ngValue]=null>Number of bath</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="+5">+5</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="garage">
+                                <option [ngValue]=null>Garages</option>
+                                <option value="1">Yes</option>
+                                <option [ngValue]=0>No</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="kitchen">
+                                <option [ngValue]=null>Kitchen</option>
+                                <option [ngValue]=0>0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="+3">+3</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="pool">
+                                <option [ngValue]=null>Pool</option>
+                                <option value="1">Yes</option>
+                                <option [ngValue]=0>No</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="air_conditioner">
+                                <option [ngValue]=null>Air Conditioner</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="+5">+5</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="garden">
+                                <option [ngValue]=null>Garden</option>
+                                <option value="1">Yes</option>
+                                <option [ngValue]=0>No</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="furniture">
+                                <option [ngValue]=null>Furniture</option>
+                                <option value="1">Yes</option>
+                                <option [ngValue]=0>No</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="property_category_id">
+                                <option [ngValue]=null>Category</option>
+                                <option value="1">Single Family</option>
+                                <option value="2">Multi Family</option>
+                                <option value="3">Condominium</option>
+                                <option value="4">Apartment</option>
+                                <option value="5">Town Home</option>
+                                <option value="6">Land</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="search_option_two">
+                        <div class="candidate_revew_select">
+                            <select class="selectpicker w100 show-tick" formControlName="property_status_id">
+                                <option [ngValue]=null>Verified</option>
+                                <option value="1">Yes</option>
+                                <option [ngValue]=0>No</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+
+
+                <li>
+                    <div class="search_option_button">
+                        <button type="submit" class="btn btn-block btn-thm">Search</button>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<app-shared-modal-map #mapModal (onDoneEvent)="onDoneEvent($event)" (onCancel)="onCancel($event)">
+</app-shared-modal-map>

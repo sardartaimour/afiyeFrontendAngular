@@ -1,0 +1,74 @@
+<section class="our-terms bgc-f7 view-profile us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="main-title mb-4 pb-3">
+                    <h2 class="mb-0">Payment Information</h2>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="my_profile_setting_input">
+                    <a routerLink="/payment/add-card" href="javascript:void(0);"><button class="btn btn2"
+                            type="button">Add
+                            Card</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Card</th>
+                            <th scope="col">Card Type</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of rows;let i=index">
+                            <tr>
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{item?.full_name}}</td>
+                                <td>*************{{item?.last_4}}</td>
+                                <td>{{item?.card_type}}</td>
+                                <td>
+                                    <a (click)="deleteData(item)" class="delete cursor-pointer" title="Delete"
+                                        data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="col-lg-12 col-xl-6">
+                <div class="my_dashboard_review add-card">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-10">
+                            <div class="row text-center">
+
+                                <div class="col-lg-12 mt-2">
+                                    <img src="assets/images/visa.png" alt="visa" style="max-width: 120px;">
+                                </div>
+                                <div class="col-lg-12 mt-3 pt-2">
+                                    <h3>Jhon Doe</h3>
+                                    <label>*************2839, Exp: 11/2014</label>
+                                </div>
+
+                                <div class="col-xl-12 text-center mt-3">
+                                    <div class="my_profile_setting_input">
+                                        <button class="btn btn2" type="submit">Delete</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</section>

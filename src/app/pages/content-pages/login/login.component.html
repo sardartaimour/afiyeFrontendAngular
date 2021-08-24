@@ -1,0 +1,57 @@
+<section class="our-log bgc-fa create-account style2 home1-overlay home1_bgi1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img class="logo1 img-fluid" src="assets/images/rsz_logo-09.png" alt="header-logo.png">
+                <h3 class="text-white mb-4 mt-3">Find your Dream Home</h3>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-5">
+                <div class="login_form inner_page">
+                    <form [formGroup]="form">
+                        <div class="heading">
+                            <h5 class="text-center pb-1">Please Login to your account</h5>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                            <small class="form-text text-danger"
+                                *ngIf="!form.get('email').valid && (form.get('email').dirty || form.get('email').touched)">Please
+                                enter email!</small>
+                        </div>
+                        <div class="form-group mb-1">
+                            <input type="password" class="form-control mb-0" placeholder="Password"
+                                formControlName="password">
+                            <small class="form-text text-danger"
+                                *ngIf="!form.get('password').valid && (form.get('password').dirty || form.get('password').touched)">Please
+                                enter password!</small>
+                        </div>
+                        <div class="form-group">
+                            <a class="tdu btn-fpswd float-left d-block mb-2 pb-1"
+                                routerLink="/pages/forgot-password">Forgot
+                                Password?</a>
+                            <a class="tdu btn-fpswd float-right d-block mb-2 pb-1" routerLink="/pages/register">Create
+                                New
+                                Account</a>
+                        </div>
+                        <button type="submit" (click)="doLogin()"
+                            class="btn btn-log btn-block btn-thm2 mb-0">Login</button>
+                        <!--<div class="divide pt-3">
+                            <hr>
+                        </div>-->
+                        <!--<div class="row mt-4 pt-2">
+                            <div class="col-md-12 text-center">
+                                <button type="button" (click)=" signInWithFB()"
+                                    class="btn color-white bgc-fb mb0 mr-3 py-2"><i
+                                        class="fa fa-facebook float-left"></i></button>
+                                <button type="button" (click)="signInWithGoogle()"
+                                    class="btn btn2 color-white bgc-gogle mb0 py-2"><i
+                                        class="fa fa-google float-left"></i></button>
+                            </div>
+                        </div>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

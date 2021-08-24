@@ -1,0 +1,204 @@
+<section class="our-terms bgc-f7 view-profile">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb-4 pb-3">
+                    <h2 class="mb-0 mt-5">Edit Profile</h2>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 col-xl-10">
+                    <div class="my_dashboard_review">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-10">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="wrap-custom-file">
+                                            <input type="file" name="image1" id="image1"
+                                                (change)="fileChangeEventProfile($event)" accept=".gif, .jpg, .png" />
+                                            <label for="image1">
+                                                <span><i class="flaticon-download"></i> Upload Photo </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput1">First Name</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput1"
+                                                formControlName="first_name" placeholder="">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('first_name').valid && (form.get('first_name').dirty || form.get('first_name').touched)">Please
+                                                enter first name!</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput1">Last Name</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput1"
+                                                formControlName="last_name" placeholder="">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('last_name').valid && (form.get('last_name').dirty || form.get('last_name').touched)">Please
+                                                enter last name!</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleEmail">Email</label>
+                                            <input type="email" class="form-control" id="formGroupExampleEmail"
+                                                formControlName="email" placeholder="">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('email').valid && (form.get('email').dirty || form.get('email').touched)">Please
+                                                enter email!</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput3">Phone Number</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput3"
+                                                mask='000-000-0000' formControlName="phone_no">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('phone_no').valid && (form.get('phone_no').dirty || form.get('phone_no').touched)">Please
+                                                enter phone no!</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput4">Social Media Profile Link</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput4"
+                                                formControlName="skype_id">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('skype_id').valid && (form.get('skype_id').dirty || form.get('skype_id').touched)">Please
+                                                enter skype id!</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group d-flex align-items-center my-1">
+                                            <label class="d-inline-block col-md-3 mb-0 pl-0">Gender</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" formControlName="gender"
+                                                    id="inlineRadio1" value="1">
+                                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                                            </div>
+                                            <div class="form-check form-check-inline ml-4">
+                                                <input class="form-check-input" type="radio" formControlName="gender"
+                                                    id="inlineRadio2" value="2">
+                                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                                            </div>
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('gender').valid && (form.get('gender').dirty || form.get('gender').touched)">Please
+                                                select gender!</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-xl-12" *ngIf="isUserVerified">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput13">Address</label>
+                                            <input #search type="text" class="form-control cursor-pointer"
+                                                id="formGroupExampleInput13" (click)="setLocationOnMap()"
+                                                formControlName="address">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('address').valid && (form.get('address').dirty || form.get('address').touched)">Please
+                                                select address!</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="my_profile_setting_textarea">
+                                            <label for="exampleFormControlTextarea1">About me</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                formControlName="about_me" rows="5"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-group d-flex align-items-center">
+                                            <span>Are you a licensed agent?</span>
+                                            <input class="ml-4" type="radio" id="inlineCheckbox1"
+                                                (change)="handleChange();onYes()" formControlName="is_licensed_agent"
+                                                value="1">
+                                            <label class="form-check-label pl-1" for="inlineCheckbox1"> Yes</label>
+                                            <input class="ml-4" type="radio" id="inlineCheckbox2"
+                                                (change)="handleChange();onNo()" formControlName="is_licensed_agent"
+                                                value="0">
+                                            <label class="form-check-label pl-1" for="inlineCheckbox2"> No</label>
+
+                                        </div>
+                                    </div>
+
+                                    <ng-container
+                                        *ngIf="form.value.is_licensed_agent == '1' || form.value.is_licensed_agent == 1">
+
+
+                                        <div class="col-lg-6 col-xl-6">
+                                            <div class="my_profile_setting_input form-group">
+                                                <label>Driving License/ID Card Copy</label>
+
+                                                <div class="resume_uploader mb30 mt-2">
+                                                    <label class="upload">
+                                                        <input type="file" accept=".gif, .jpg, .png, .pdf"
+                                                            (change)="fileChangeEventDrivingLicense($event)">
+                                                        <span><i class="flaticon-download"></i></span> Upload
+                                                    </label>
+                                                </div>
+                                                <p>Accepted Formats: GIF,JPG, PNG,PDF</p>
+                                                <a *ngIf="user && user?.licence_media && user?.licence_media.extension == 'pdf'"
+                                                    class="fancybox view_file"
+                                                    href="{{user?.licence_media.base_path+'/'+user?.licence_media.system_name}}"
+                                                    data-fancybox-type="iframe" data-type="iframe">
+                                                    View File
+                                                </a>
+                                                <img *ngIf="user && user?.licence_media && user?.licence_media.extension != 'pdf'"
+                                                    class="fancybox view_file" class="images"
+                                                    [src]="user?.licence_media.base_path+'/'+user?.licence_media.system_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6">
+                                            <div class="my_profile_setting_input form-group">
+                                                <label>Real State Agent Documentation</label>
+
+                                                <div class="resume_uploader mb30 mt-2">
+                                                    <label class="upload">
+                                                        <input type="file" accept=".gif, .jpg, .png, .pdf"
+                                                            (change)="fileChangeEventAgentCertificate($event)">
+                                                        <span><i class="flaticon-download"></i></span> Upload
+                                                    </label>
+                                                </div>
+                                                <p>Accepted Formats: GIF,JPG, PNG,PDF</p>
+                                                <a *ngIf="user && user?.agent_certificate_media && user?.agent_certificate_media.extension == 'pdf'"
+                                                    class="fancybox view_file"
+                                                    href="{{user?.agent_certificate_media.base_path+'/'+user?.agent_certificate_media.system_name}}"
+                                                    data-type="iframe">
+                                                    View File
+                                                </a>
+                                                <img class="images" class="fancybox view_file"
+                                                    *ngIf="user && user?.agent_certificate_media && user?.agent_certificate_media.extension != 'pdf'"
+                                                    class="images"
+                                                    [src]="user?.agent_certificate_media.base_path+'/'+user?.agent_certificate_media.system_name">
+
+                                            </div>
+                                        </div>
+
+
+                                    </ng-container>
+                                    <div class="col-xl-12 text-right">
+                                        <div class="my_profile_setting_input">
+                                            <button class="btn btn2" type="submit">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>
+
+<app-shared-modal-map #mapModal (onDoneEvent)="onDoneEvent($event)"></app-shared-modal-map>

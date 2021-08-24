@@ -1,0 +1,104 @@
+<!-- Our Terms & Conditions -->
+<section class="our-blog bgc-f7 pb50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center pb-3">
+                    <h2 class="mb-0 mt-5">Inbox</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="message_container">
+                    <div class="inbox_user_list">
+
+                        <ul>
+                            <ng-container *ngFor="let item of chatHeads">
+                                <li class="contact" [class.active]="item.user?.id == selectedUserHead?.user.id">
+                                    <a href="javascript:void(0);" (click)="selectUser(item)">
+                                        <div class="wrap">
+
+                                            <img class="img-fluid"
+                                                src="{{ item.user && item.user.profile_media  ? item.user.profile_media.base_path+'/'+item.user.profile_media.system_name:'assets/images/avatar.jpg'}}"
+                                                alt="s1.jpg">
+                                            <div class="meta">
+                                                <h5 class="name">{{item?.user?.first_name}} {{item?.user?.last_name}}
+                                                </h5>
+                                                <p class="preview last_message">{{item?.last_message?.message}}</p>
+                                            </div>
+                                            <!-- <div class="m_notif">2</div> -->
+                                        </div>
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="message_container">
+                    <div class="user_heading">
+                        <a href="javascript:void(0);">
+                            <div class="wrap">
+                                <div class="meta">
+                                    <h5 class="name">{{selectedUserHead?.user?.first_name}}
+                                        {{selectedUserHead?.user?.last_name}}
+                                        <!-- <span *ngIf="selectedUserHead?.user?.id"
+                                            class="fa fa-trash float-right"></span> -->
+                                    </h5>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="inbox_chatting_box" #scrollMessage infiniteScroll
+                        [infiniteScrollDistance]="scrollDistance" [infiniteScrollUpDistance]="scrollUpDistance"
+                        [scrollWindow]="false" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"
+                        [infiniteScrollDisabled]="infiniteScrollDisabled" (scrolledUp)="onUp()">
+                        <ul class="chatting_content">
+                            <ng-container *ngFor="let item of messages;let i=index">
+                                <li class="media sent" *ngIf="item?.sender_id != requestService.getLoggedInUserId()">
+                                    <div class="media-body">
+                                        <p>{{item?.message}}</p>
+                                        <div class="date_time float-right">
+                                            {{ item.created_at | date: "yyyy-MM-dd hh:mm:ss aa" | timeAgo }}</div>
+
+                                    </div>
+                                </li>
+                                <li class="media reply first"
+                                    *ngIf="item?.sender_id == requestService.getLoggedInUserId()">
+                                    <div class="media-body text-right">
+                                        <p>{{item?.message}}</p>
+                                        <div class="date_time float-right equal">
+                                            {{ item.created_at  | utcTime | date: "yyyy-MM-dd hh:mm:ss aa" | timeAgo }}
+                                        </div>
+                                        <a (click)="onDelete(item)" class="ml-1 mr-1" title="Delete Message"
+                                            style="font-size: 17px;cursor:pointer;">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+
+
+                                    </div>
+                                </li>
+                            </ng-container>
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="mi_text" style="padding:15px;">
+                    <div class="message_input">
+                        <form class="form-inline" [formGroup]="form">
+                            <input class="form-control" type="search" placeholder="Enter text here..."
+                                formControlName="message" aria-label="Search">
+                            <button [disabled]="!form.valid" (click)="sendMessage()" class="btn" type="submit"><img
+                                    src="assets/images/ic_send.png"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

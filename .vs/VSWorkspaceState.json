@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\layouts\\content-layout",
+    "\\src\\app\\layouts\\full-layout",
+    "\\src\\app\\modules",
+    "\\src\\app\\modules\\inbox",
+    "\\src\\app\\modules\\payment",
+    "\\src\\app\\pages",
+    "\\src\\assets\\css"
+  ],
+  "SelectedNode": "\\src\\app\\modules\\inbox\\inbox.module.ts",
+  "PreviewInSolutionExplorer": false
+}

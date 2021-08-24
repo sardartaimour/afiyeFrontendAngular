@@ -1,0 +1,89 @@
+<section class="our-log-reg bgc-fa create-account home1-overlay home1_bgi1 py-5 h-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img class="logo1 img-fluid" src="assets/images/logo-account.png" alt="header-logo.png">
+                <h3 class="text-white mb-4 mt-3">Find your Dream Home</h3>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-5">
+                <div class="sign_up_form inner_page">
+                    <div class="heading">
+                        <h5 class="text-center">Please enter your information below to</h5>
+                    </div>
+                    <div class="details">
+                        <form [formGroup]="form" (ngSubmit)="doRegister()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="First Name"
+                                    formControlName="first_name">
+                                <small class="form-text text-danger"
+                                    *ngIf="!form.get('first_name').valid && (form.get('first_name').dirty || form.get('first_name').touched)">Please
+                                    enter first name!</small>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Last Name"
+                                    formControlName="last_name">
+                                <small class="form-text text-danger"
+                                    *ngIf="!form.get('first_name').valid && (form.get('last_name').dirty || form.get('last_name').touched)">Please
+                                    enter last name!</small>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                                <small class="form-text text-danger"
+                                    *ngIf="!form.get('email').valid && (form.get('email').dirty || form.get('email').touched)">Please
+                                    enter email!</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" mask='000-000-0000' class="form-control" placeholder="Phone Number"
+                                    formControlName="phone_no">
+                                <small class="form-text text-danger"
+                                    *ngIf="!form.get('phone_no').valid && (form.get('phone_no').dirty || form.get('phone_no').touched)">Please
+                                    enter phone no!</small>
+                            </div>
+                            <div class="form-group d-flex align-items-center">
+                                <label class="d-inline-block col-md-3 mb-0 pl-0">Gender</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" formControlName="gender"
+                                        id="inlineRadio1" value="1">
+                                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline ml-4">
+                                    <input class="form-check-input" type="radio" formControlName="gender"
+                                        id="inlineRadio2" value="2">
+                                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                                </div>
+                                <small class="form-text text-danger"
+                                    *ngIf="!form.get('gender').valid && (form.get('gender').dirty || form.get('gender').touched)">Please
+                                    select gender!</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password"
+                                    formControlName="password">
+                                <small class="form-text text-danger"
+                                    *ngIf="!form.get('repeat').valid && (form.get('repeat').dirty || form.get('repeat').touched)">Please
+                                    enter password!</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm Password"
+                                    formControlName="repeat">
+                                <small class="form-text text-danger"
+                                    *ngIf="form.get('repeat')?.errors?.notEquivalent  && (form.get('repeat').dirty || form.get('repeat').touched)">Passwords
+                                    did not match</small>
+                                <small class="form-text text-danger"
+                                    *ngIf="form.get('repeat')?.errors?.required  && (form.get('repeat').dirty || form.get('repeat').touched)">Confirm
+                                    password is required</small>
+                            </div>
+                            <button type="submit" class="btn btn-log btn-block btn-thm2">Register</button>
+                            <p class="text-center mb-0">Have an account? <a class="text-thm"
+                                    routerLink="/pages/login">Login</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

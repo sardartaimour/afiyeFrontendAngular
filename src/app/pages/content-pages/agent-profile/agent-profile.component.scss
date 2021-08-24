@@ -1,0 +1,72 @@
+.demo:empty {
+width: 500;
+}
+.card-skeleton {
+    width: 100%;
+    float: none;
+}
+.props{
+height: 220px;;
+}
+
+    .star {
+      position: relative;
+      display: inline-block;
+      font-size: 17px;
+    color: #d3d3d3;
+    top: -3px;
+    }
+      .main-rating .star {
+      position: relative;
+      display: inline-block;
+      font-size: 2rem;
+      color: #d3d3d3;
+      margin-left: 10px;
+    }
+    .full {
+    //   color: red;
+    color: #bcc52a!important;
+    }
+    .half {
+      position: absolute;
+      display: inline-block;
+      overflow: hidden;
+    //   color: red;
+    color: #bcc52a!important;
+    }
+
+    .rate{
+            padding-left: 10px;
+    padding-top: 2px;
+
+    }
+    .b-50{
+        border-radius: 50%;
+    }
+    .main-rating .star {
+    position: relative;
+    display: inline-block;
+    font-size: 1.3rem;
+    color: #d3d3d3;
+    margin-left: 0px;
+}
+.main-rating{
+    vertical-align: sub;
+        outline: none;
+}
+.feat_property .details .tc_content h4:focus {
+outline: 0;
+}
+
+.a-img{
+  height: 253px !important;
+  width: 300px !important;
+    }
+
+    .prop-img{
+      height: 253px !important;
+      width: 300px !important;
+    }
+    ::ng-deep .popover {
+    z-index: 99;
+    }

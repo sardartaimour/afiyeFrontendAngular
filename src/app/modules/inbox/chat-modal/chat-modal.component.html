@@ -1,0 +1,21 @@
+<div bsModal #chatModal="bs-modal" class="modal fade map_modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+    role="dialog" (onHide)="showComp=false" (onShow)="showComp=true" aria-labelledby="dialog-child-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h4 id="dialog-child-name" class="modal-title pull-left">Set Location</h4> -->
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-messages *ngIf="showComp" [selectedUserHead]="selectedUser"></app-messages>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-primary" (click)="hideModal();cancel()">Cancel</button>
+                <button type="button" class="btn btn-success" (click)="onDone()">Done</button> -->
+
+            </div>
+        </div>
+    </div>
+</div>

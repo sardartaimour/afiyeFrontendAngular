@@ -1,0 +1,247 @@
+<!-- Home Design -->
+<section class="home-one home1-overlay home1_bgi1">
+    <div class="container">
+        <div class="row posr d-flex justify-content-center">
+            <div class="col-lg-8">
+                <div class="home_content">
+                    <div class="home-text text-center">
+                        <h2 class="fz48">Let’s find you a home</h2>
+                    </div>
+                    <div class="home_adv_srch_opt">
+                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-home-tab" (click)="changeTab('1')"
+                                    data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+                                    aria-selected="true">Buy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-profile-tab" (click)="changeTab('2')" data-toggle="pill"
+                                    href="#pills-profile" role="tab" aria-controls="pills-profile"
+                                    aria-selected="false">Rent</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content home1_adsrchfrm" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                aria-labelledby="pills-home-tab">
+                                <div class="home1-advnc-search">
+                                    <ul class="h1ads_1st_list mb0 row">
+                                        <li class="list-inline-item col-md-9 mr-0">
+                                            <div class="form-group w-100">
+                                                <!-- <input type="text" class="form-control" placeholder="Enter a location"> -->
+
+                                                <a (click)="openMapModal()" href="javascript:void(0);"><button
+                                                        class="btn btn-search-prop btn-block">{{value}}</button></a>
+                                                <span class="flaticon-maps-and-flags"></span>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-inline-item col-md-3">
+                                            <div class="search_option_button w-100">
+                                                <a routerLink="/pages/property-list" href="javascript:void(0);">
+                                                    <button class="btn btn-thm btn-block">Search</button></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                aria-labelledby="pills-profile-tab">
+                                <div class="home1-advnc-search">
+                                    <ul class="h1ads_1st_list mb0 row">
+                                        <li class="list-inline-item col-md-9 mr-0">
+                                            <div class="form-group w-100">
+                                                <!-- <input type="text" class="form-control" placeholder="Enter a location"> -->
+                                                <a (click)="openMapModal()" href="javascript:void(0);"><button
+                                                        class="btn btn-search-prop btn-block">{{value}}</button></a>
+                                                <span class="flaticon-maps-and-flags"></span>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-inline-item col-md-3">
+                                            <div class="search_option_button w-100">
+                                                <a routerLink="/pages/property-list" href="javascript:void(0);"><button
+                                                        class="btn btn-thm btn-block">Search</button></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Feature Properties -->
+<!--<section id="feature-property" class="feature-property bgc-f7">
+
+    <div class="container ovh">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb40">
+                    <h2><a routerLink="/pages/featured-properties" href="javascript:void(0);">Featured Properties <i
+                                class="fa fa-angle-right pl-1"></i></a></h2>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="feature_property_slider" *ngIf="rowsFeature.length > 0">
+                    <ng-container *ngFor="let item of rowsFeature;let i=index">
+                        <div class="item">
+                            <div class="feat_property" (click)="goToProperty(item.id)">
+                                <div class="thumb">
+                                    <ng-container *ngIf="item.media.length == 0">
+                                        <img class="img-whp" src="assets/images/defaultd.jpeg" height="250" width="338"
+                                            alt="fp1.jpg">
+                                    </ng-container>
+                                    <ng-container *ngIf="item.media.length > 0">
+                                        <img class="img-whp" height="250" width="338"
+                                            src="{{item.media[0]?.base_path+'/'+item.media[0]?.system_name}}"
+                                            alt="fp1.jpg">
+                                    </ng-container>
+
+                                    <div class="thmb_cntnt">
+                                        <ul class="tag mb0">
+                                            <li class="list-inline-item  w-p"><a
+                                                    routerLink="/pages/property/{{item.id}}"
+                                                    href="javascript:void(0)">{{item?.price | currency: 'GH₵' : 'symbol' : '1.0-0'}}</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="icon mb0">
+                                            <li class="list-inline-item" *ngIf="!item.is_favorite"><a
+                                                    (click)="markFavorite(item,i,1)" href="javascript:void(0);"><span
+                                                        class="flaticon-heart"></span></a>
+                                            </li>
+
+                                            <li class="list-inline-item" *ngIf="item.is_favorite == 1"><a
+                                                    (click)="markUnFavorite(item,i,1)" href="javascript:void(0);"><span
+                                                        class="fa fa-heart"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="details">
+                                    <div class="tc_content">
+                                        <h4><a routerLink="/pages/property/{{item?.id}}"
+                                                href="javascript:void(0);">{{item?.name}}
+                                            </a></h4>
+                                        <p><span class="flaticon-placeholder"></span> {{item?.address}}</p>
+                                        <ul class="prop_details mb0">
+                                            <li class="list-inline-item"><a href="javascript:void(0);">Beds:
+                                                    {{item?.no_of_bed_room}}</a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0);">Baths:
+                                                    {{item?.no_of_bath_room}}</a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0);">Sq Ft:
+                                                    {{item?.property_area}}</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>-->
+
+<!-- Favorite Properties -->
+
+<section id="feature-property" class="feature-property bgc-f7 pt-2">
+    <br />
+    <div class="container ovh">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb40">
+                    <h2><a routerLink="/pages/most-favorite-properties" href="javascript:void(0);">Most Favorite
+                            Properties <i class="fa fa-angle-right pl-1"></i></a></h2>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="feature_property_slider" *ngIf="rowsMostFavorite.length > 0">
+                    <ng-container *ngFor="let item of rowsMostFavorite;let i=index">
+                        <div class="item">
+                            <div class="feat_property" (click)="goToProperty(item.property_id)">
+                                <div class="thumb">
+                                    <ng-container *ngIf="item.media.length == 0">
+                                        <img class="img-whp" src="assets/images/defaultd.jpeg" alt="fp1.jpg"
+                                            height="250" width="338">
+                                    </ng-container>
+                                    <ng-container *ngIf="item.media.length > 0">
+                                        <img class="img-whp" height="250" width="338"
+                                            src="{{item.media[0]?.base_path+'/'+item.media[0]?.system_name}}"
+                                            alt="fp1.jpg">
+                                    </ng-container>
+
+                                    <div class="thmb_cntnt">
+                                        <ul class="tag mb0">
+                                            <li class="list-inline-item  w-p"><a
+                                                    routerLink="/pages/property/{{item.property_id}}"
+                                                    href="javascript:void(0)">{{item?.price | currency: 'GH₵' : 'symbol' : '1.0-0'}}</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="icon mb0">
+                                            <li class="list-inline-item" *ngIf="!item.is_favorite"><a
+                                                    (click)="markFavorite(item,i,2)" href="javascript:void(0);"><span
+                                                        class="flaticon-heart"></span></a>
+                                            </li>
+
+                                            <li class="list-inline-item" *ngIf="item.is_favorite == 1"><a
+                                                    (click)="markUnFavorite(item,i,2)" href="javascript:void(0);"><span
+                                                        class="fa fa-heart"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="details">
+                                    <div class="tc_content">
+                                        <h4><a routerLink="/pages/property/{{item?.property_id}}"
+                                                href="javascript:void(0);">{{item?.name}}
+                                            </a></h4>
+                                        <p><span class="flaticon-placeholder"></span> {{item?.address}}</p>
+                                        <ul class="prop_details mb0">
+                                            <li class="list-inline-item"><a href="javascript:void(0);">Beds:
+                                                    {{item?.no_of_bed_room}}</a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0);">Baths:
+                                                    {{item?.no_of_bath_room}}</a>
+                                            </li>
+                                            <li class="list-inline-item"><a href="javascript:void(0);">Sq Ft:
+                                                    {{item?.property_area}}</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="container ovh">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb40">
+                    <h2><a routerLink="/pages/most-favorite-properties" href="javascript:void(0);">Advertisement
+                            <i class="fa fa-angle-right pl-1"></i></a></h2>
+                </div>
+            </div>
+            <div class="col-lg-12 text-center">
+                <h5 *ngIf="ad && ad.type_id == 2">{{ad.web_text }}</h5>
+                <img *ngIf="ad && ad.type_id == 1 && ad?.web_media " width="1170" height="158"
+                    src="{{ad.web_media ? ad.web_media.base_path+'/'+ad.web_media.system_name : 'assets/images/defaultd.jpeg'}}">
+            </div>
+        </div>
+    </div>-->
+</section>
+
+<app-shared-modal-map #mapModal (onDoneEvent)="onDoneEvent($event)"></app-shared-modal-map>
+<app-app-download-modal #appDownloadModal></app-app-download-modal>

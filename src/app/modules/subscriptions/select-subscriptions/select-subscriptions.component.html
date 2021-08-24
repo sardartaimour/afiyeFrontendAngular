@@ -1,0 +1,49 @@
+<!-- Our Terms & Conditions -->
+<section class="our-blog bgc-f7 pb30 my-subs us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="breadcrumb_content style2 mb0-991">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/subscriptions/my-subscriptions"
+                                href="javascript:void(0)">My Subscription</a></li>
+                        <li class="breadcrumb-item active text-thm" aria-current="page">Select Subscription</li>
+                    </ol>
+                    <h2 class="breadcrumb_title text-center">Select Subscription</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-4 offset-lg-2">
+                <a routerLink="/subscriptions/add-subscription" [queryParams]="{ type: 1 }" href="javascript:void(0)">
+                    <div class="for_blog feat_property">
+                        <div class="thumb">
+                            <img class="img-whp" src="assets/images/type_one_logo.png" alt="bh1.jpg">
+                        </div>
+                        <div class="details">
+                            <div class="tc_content">
+                                <h4>Advertisement Subscription</h4>
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xl-4">
+                <a routerLink="/subscriptions/add-subscription" [queryParams]="{ type: 2 }" href="javascript:void(0)">
+                    <div class="for_blog feat_property">
+                        <div class="thumb">
+                            <img class="img-whp" src="assets/images/type_two_logo.png" alt="bh2.jpg">
+                        </div>
+                        <div class="details">
+                            <div class="tc_content">
+                                <h4>Premier Agent Subscription</h4>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>

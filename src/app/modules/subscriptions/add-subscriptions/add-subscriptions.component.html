@@ -1,0 +1,234 @@
+<!-- Our Terms & Conditions -->
+<section class="our-terms bgc-f7">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="breadcrumb_content style2 mb0-991">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/subscriptions/my-subscription"
+                                href="javascript:void(0);">My Subscription</a></li>
+                        <li class="breadcrumb-item"><a routerLink="/subscriptions/select-subscription"
+                                href="javascript:void(0);">Select Subscription</a></li>
+                        <li class="breadcrumb-item active text-thm" aria-current="page">Add Subscription</li>
+                    </ol>
+                    <h2 class="breadcrumb_title text-center">Subscription</h2>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 col-xl-6">
+                    <div class="my_dashboard_review">
+                        <div class="row justify-content-center">
+
+                            <div class="col-xl-11">
+                                <div class="row">
+
+                                    <ng-container *ngIf="subscriptionType == 1">
+                                        <div class="col-lg-12">
+                                            <div class="my_profile_setting_input form-group autocomplete-dropdown">
+                                                <label for="formGroupExampleInput4">Search property</label>
+                                                <ng-template #user let-r="result" let-t="term">
+                                                    <small class="nameFilter">{{ r.name }}</small>
+                                                </ng-template>
+                                                <input type="text" class="form-control" [ngbTypeahead]="searchProperty"
+                                                    [resultTemplate]="user" [inputFormatter]="propertyFormatter"
+                                                    (selectItem)="selectedItem($event)" formControlName="property_id">
+                                                <small class="form-text text-danger"
+                                                    *ngIf="!form.get('property_id').valid && (form.get('property_id').dirty || form.get('property_id').touched)">Please
+                                                    enter property_id!</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12" *ngIf="selectedProperty">
+                                            <ul class="feature_property_half_clist mb0">
+                                                <li class="extrawide list-inline-item w-100 ml-0">
+                                                    <div class="feat_property home7 style4 mb-3 mt-3">
+                                                        <div class="thumb">
+                                                            <div class="fp_single_item_slider">
+                                                                <ng-container
+                                                                    *ngIf="selectedProperty?.media.length > 0">
+                                                                    <ng-container
+                                                                        *ngFor="let img of selectedProperty?.media">
+                                                                        <div class="item">
+                                                                            <img class="img-whp"
+                                                                                src="{{img?.base_path+'/'+img?.system_name}}"
+                                                                                alt="fp1.jpg">
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </ng-container>
+
+                                                                <ng-container
+                                                                    *ngIf="selectedProperty?.media.length == 0">
+                                                                    <div class="item">
+                                                                        <img class="img-whp"
+                                                                            src="assets/images/defaultd.jpeg"
+                                                                            alt="fp1.jpg">
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                            <div class="thmb_cntnt style2">
+                                                                <ul class="tag mb0">
+                                                                    <li class="list-inline-item w-p"><a
+                                                                            routerLink="/pages/property/{{selectedProperty?.id}}"
+                                                                            href="javascript:void(0);">{{selectedProperty?.price | currency: 'GH₵'}}</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="thmb_cntnt style3">
+                                                                <ul class="icon mb0">
+                                                                    <li class="list-inline-item"
+                                                                        *ngIf="!selectedProperty.is_favorite"><a
+                                                                            href="javascript:void(0);"><span
+                                                                                class="flaticon-heart"></span></a></li>
+
+                                                                    <li class="list-inline-item"
+                                                                        *ngIf="selectedProperty.is_favorite == 1"><a
+                                                                            href="javascript:void(0);"><span
+                                                                                class="fa fa-heart"></span></a></li>
+                                                                    <li class="list-inline-item"><a
+                                                                            href="javascript:void(0);"><span
+                                                                                class="fa fa-trash"></span></a></li>
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="details">
+                                                            <div class="tc_content">
+                                                                <h4><a routerLink="/pages/property/{{selectedProperty?.id}}"
+                                                                        href="javascript:void(0);">{{selectedProperty?.name}}
+                                                                    </a></h4>
+                                                                <p><span class="flaticon-placeholder"></span>
+                                                                    {{selectedProperty?.address}}</p>
+                                                                <ul class="prop_details mb0">
+                                                                    <li class="list-inline-item"><a
+                                                                            href="javascript:void(0);">Beds:
+                                                                            {{selectedProperty?.no_of_bed_room}}</a>
+                                                                    </li>
+                                                                    <li class="list-inline-item"><a
+                                                                            href="javascript:void(0);">Baths:
+                                                                            {{selectedProperty?.no_of_bath_room}}</a>
+                                                                    </li>
+                                                                    <li class="list-inline-item"><a
+                                                                            href="javascript:void(0);">Sq Ft:
+                                                                            {{selectedProperty?.property_area}}</a></li>
+                                                                </ul>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </ng-container>
+                                    <div class="col-lg-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput4">Start date</label>
+                                            <input type="date" class="form-control" formControlName="start_date"
+                                                (input)="updateDurationAndEndDate()" [max]="getEndDate()">
+                                        </div>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('start_date').valid && (form.get('start_date').dirty || form.get('start_date').touched)">Please
+                                            enter start date!</small>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput4">End date</label>
+                                            <input type="date" class="form-control" formControlName="end_date"
+                                                (input)="updateDurationAndEndDate()" [min]="getStartDate()">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('end_date').valid && (form.get('end_date').dirty || form.get('end_date').touched)">Please
+                                                enter end date!</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput4">Duration</label>
+                                            <input type="number" class="form-control" formControlName="duration"
+                                                disabled min="0">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('duration').valid && (form.get('duration').dirty || form.get('duration').touched)">Please
+                                                enter duration!</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput4">Amount spent on Ads Daily</label>
+                                            <input type="text" class="form-control" mask="separator.0"
+                                                thousandSeparator="," formControlName="per_day_charges">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('per_day_charges').valid && (form.get('per_day_charges').dirty || form.get('per_day_charges').touched)">Please
+                                                enter per day charges!</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="my_profile_setting_input form-group">
+                                            <label for="formGroupExampleInput4">Total Amount</label>
+                                            <input type="text" class="form-control" mask="separator.0" disabled
+                                                thousandSeparator="," formControlName="total_amount">
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('total_amount').valid && (form.get('total_amount').dirty || form.get('total_amount').touched)">Please
+                                                enter total amount!</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="my_profile_setting_input ui_kit_select_search form-group">
+                                            <label>Auto renew</label>
+                                            <div class="candidate_revew_select">
+                                                <select class="selectpicker w100 show-tick"
+                                                    formControlName="auto_renew">
+                                                    <option [ngValue]=null>Auto renew</option>
+                                                    <option [ngValue]=1>Yes</option>
+                                                    <option [ngValue]=0>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" *ngIf="showCard">
+                                        <div class="my_profile_setting_input ui_kit_select_search form-group">
+                                            <label>Select Card</label>
+                                            <div class="candidate_revew_select">
+                                                <select class="selectpicker w100 show-tick" formControlName="card_id">
+                                                    <option [ngValue]=null *ngIf="cards.length== 0">Select Card</option>
+                                                    <option *ngFor="let item of cards" value="{{item?.id}}">
+                                                        {{item?.card_type}}</option>
+                                                </select>
+                                                <small class="form-text text-danger"
+                                                    *ngIf="!form.get('card_id').valid && (form.get('card_id').dirty || form.get('card_id').touched)">Please
+                                                    enter card !</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12 text-center">
+                                        <div class="my_profile_setting_input">
+                                            <button class="btn btn2 mt-2" type="submit">Add</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12 text-center">
+                                        <h4 class="mt-4"><strong>Advertisement Subscription</strong></h4>
+                                        <p>Creating an advertising subscription allows clients to preview selected
+                                            property
+                                            on the Featured List section on the home page</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>

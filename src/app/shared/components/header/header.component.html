@@ -1,0 +1,144 @@
+<!-- Main Header Nav -->
+<header id="header_top" class="header-nav menu_style_home_one navbar-scrolltofixed stricky main-menu mainheader"
+    [class.style2]="changeHeader">
+    <div class="container-fluid p0">
+        <!-- Ace Responsive Menu -->
+        <nav>
+            <!-- Menu Toggle btn-->
+            <div class="menu-toggle">
+                <img [routerLink]="['/pages/main']" class="nav_logo_img img-fluid" src="assets/images/header-logo.png"
+                    alt="header-logo.png">
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <a [routerLink]="['/pages/main']" class="navbar_brand float-left dn-smd">
+                <img class="logo1 img-fluid" src="assets/images/logo-white.png" alt="logo-white.png">
+                <img class="logo2 img-fluid" src="assets/images/logo-blue.png" alt="logo-blue.png">
+                <!-- <span>Afiye Group</span> -->
+            </a>
+            <!-- Responsive Menu Structure-->
+            <!--Note: declare the Menu style in the data-menu-style="horizontal" (options: horizontal, vertical, accordion) -->
+            <ul id="respMenu" class="ace-responsive-menu text-right" data-menu-style="horizontal">
+                <li>
+                    <a [routerLink]="['/pages/main']"><span class="title">Home</span></a>
+                </li>
+
+                <li>
+                    <a [routerLink]="['/pages/agents']"><span class="title">Agent List</span></a>
+                </li>
+
+                <li>
+                    <a [routerLink]="['/pages/about-us']"><span class="title">About Us</span></a>
+                </li>
+
+
+                <li class="last">
+                    <a [routerLink]="['/pages/contact-us']"><span class="title">Contact Us</span></a>
+                </li>
+                <li *ngIf="!requestService.isAuthenticated()" class="list-inline-item list_s"><a
+                        [routerLink]="['/pages/login']" class="btn flaticon-user"> <span class="dn-lg">&nbsp;Login</span></a>
+                </li>
+
+                <!-- <li class="user_setting notifi-list-outer" *ngIf="requestService.isAuthenticated()">
+                    <div class="dropdown menu-active">
+                        <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                            <span class="fa fa-bell"></span></a>
+                        <div class="dropdown-menu">
+                            <div class="user_setting_content">
+                                <div class="notifi-list">
+                                    <h6>New Property Added sucessfully <span class="float-right">0 min ago</span></h6>
+                                    <p class="address">Your Property Added sucessfully with details</p>
+                                </div>
+                                <div class="notifi-list">
+                                    <h6>New Property Added sucessfully <span class="float-right">30 min ago</span></h6>
+                                    <p class="address">Your Property Added sucessfully with details</p>
+                                </div>
+                                <div class="notifi-list">
+                                    <h6>New Property Added sucessfully <span class="float-right">10 min ago</span></h6>
+                                    <p class="address">Your Property Added sucessfully with details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li> -->
+
+                <li class="user_setting" *ngIf="requestService.isAuthenticated()">
+                    <div class="dropdown menu-active">
+                        <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+                            <img class="rounded-circle" *ngIf="userDetails && !userDetails.profile_media"
+                                 src="assets/images/avatar.jpg" heaight="45" width="45" alt="e1.png">&nbsp;
+                            <img class="rounded-circle" *ngIf="userDetails && userDetails.profile_media"
+        src="{{userDetails.profile_media.base_path+'/'+userDetails.profile_media.system_name}}"
+        height="45" width="45" alt="e1.png">&nbsp;
+                            <span class="dn-1199">{{userDetails && userDetails.id ? userDetails?.first_name :''}}</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="user_set_header">
+                                <img *ngIf="userDetails && !userDetails.profile_media" class="float-left"
+                                    src="assets/images/avatar.jpg" height="45" width="45" alt="e1.png">
+                                <img class="float-left" *ngIf="userDetails && userDetails.profile_media"
+                                    src="{{userDetails.profile_media.base_path+'/'+userDetails.profile_media.system_name}}"
+                                    height="45" width="45" alt="e1.png">
+                                <p>{{userDetails && userDetails.id ? userDetails?.first_name :''}} <br><span
+                                        class="address">{{userDetails && userDetails.id ? userDetails?.email :''}}</span>
+                                </p>
+                            </div>
+                            <div class="user_setting_content">
+                                <a class="dropdown-item active loginUser" [routerLink]="getLink()"
+                                    href="javascript:void(0);">View
+                                    Profile</a>
+                                <a class="dropdown-item loginUser" routerLink="/inbox/messages"
+                                    href="javascript:void(0);">Messages</a>
+                                <a class="dropdown-item loginUser" routerLink="/property/favorite-properties"
+                                    href="javascript:void(0);">Favorite
+                                    Properties</a>
+                                <a class="dropdown-item loginUser" routerLink="/property/manage-properties"
+                                    href="javascript:void(0);">Manage Properties</a>
+                                <!--<a class="dropdown-item loginUser" routerLink="/subscriptions/my-subscription"
+                                    href="javascript:void(0);">My Subscriptions</a>
+                                <a class="dropdown-item loginUser" routerLink="/payment/card-list"
+                                    href="javascript:void(0);">Payment</a>-->
+                                <a class="dropdown-item loginUser" (click)="onLogout()" href="javascript:void(0);">Log
+                                    out</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-inline-item add_listing"><a (click)="addProperty()" href="javascript:void(0)"><span
+                            class="flaticon-plus"></span><span class="dn-lg"> Add Property</span></a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- Modal -->
+
+<!-- Main Header Nav For Mobile -->
+<div id="page" class="stylehome1 h0">
+    <div class="mobile-menu">
+        <div class="header stylehome1">
+            <div class="main_logo_home2 text-center">
+                <img class="nav_logo_img img-fluid mt20" src="assets/images/logo.png" alt="header-logo2.png">
+            </div>
+            <ul class="menu_bar_home2">
+                <li class="list-inline-item list_s"><a routerLink="/pages/register" href="javascript:void(0)"><span
+                            class="flaticon-user"></span></a></li>
+                <li class="list-inline-item"><a href="#menu"><span></span></a></li>
+            </ul>
+        </div>
+    </div><!-- /.mobile-menu -->
+    <nav id="menu" class="stylehome1">
+        <ul>
+            <li><a [routerLink]="['/pages/main']">Home</a></li>
+            <li><a [routerLink]="['/pages/agents']">Agent List</a></li>
+            <li><a [routerLink]="['/pages/about-us']">About Us</a></li>
+            <li><a [routerLink]="['/pages/contact-us']">Contact Us</a></li>
+            <li><a [routerLink]="['/pages/login']"><span class="flaticon-user"></span> Login</a></li>
+            <li><a [routerLink]="['/pages/login']"><span class="flaticon-plus"></span> Add Property</a></li>
+        </ul>
+    </nav>
+</div>

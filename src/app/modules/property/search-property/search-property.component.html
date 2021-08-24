@@ -1,0 +1,57 @@
+<section class="our-agent-single bgc-f7 pb30-991">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb-4 pb-2">
+                    <h2 class="mb-0">Search Location</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="application_statics mt-2">
+                            <form>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="my_profile_setting_input form-group mb-0">
+                                            <input type="text" class="form-control"
+                                                placeholder="Searching for current location please wait">
+                                            <a routerLink="/pages/property-list" href="javascript:void(0);">
+                                                <button class="btn search-icon" type="submit" style="top: 3px;"><span
+                                                        class="flaticon-magnifying-glass"></span></button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="property_video p0">
+                                <div class="thumb">
+                                    <div class="h400" id="map-canvas">
+                                        <agm-map [latitude]="myLatLng?.lat" [longitude]="myLatLng?.lng"
+                                            style="height: 350px !important" [disableDefaultUI]="false"
+                                            [zoomControl]="true">
+
+                                            <!-- <agm-marker [latitude]="myLatLng?.lat" [longitude]="myLatLng?.lng"
+                                                [markerDraggable]="false">
+
+
+                                            </agm-marker> -->
+
+
+                                        </agm-map>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+.last_message{
+     display: inline-block;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.active{
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 2%;
+}
+
+.inbox_chatting_box .chatting_content li.media.sent .media-body {
+    z-index: 99;
+}
+
+.inbox_user_list ul li {
+    padding-left: 3px;
+}
+.equal{
+    padding-top: 4px;
+}

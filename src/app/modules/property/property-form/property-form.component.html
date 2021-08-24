@@ -1,0 +1,405 @@
+<section class="our-terms bgc-f7">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="main-title text-center mb-4 pb-3">
+                    <h2 class="mb-0">{{title}}</h2>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 col-xl-10">
+                    <div class="my_dashboard_review">
+                        <div class="row">
+                            <!-- <h4 class="mb30">Create Listing</h4> -->
+                            <!-- <div class="col-lg-12">
+                                <div class="portfolio_upload " style="cursor: pointer;">
+                                    <input #file type="file" name="myfile"
+                                        (change)="fileChangeEventPropertyFeature($event)" accept=".gif, .jpg, .png" />
+                                    <div (click)="file.click()" class="icon"><span class="flaticon-download"></span>
+                                    </div>
+                                    <p>Upload property feature image</p>
+                                </div>
+                            </div> -->
+
+
+
+                            <div class="col-lg-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="propertyTitle">Name or Title</label>
+
+                                    <input type="text" class="form-control" id="propertyTitle" formControlName="name">
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('name').valid && (form.get('name').dirty || form.get('name').touched)">Please
+                                        enter name!</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="propertyTitle">Price</label>
+                                    <input type="text" class="form-control" id="propertyTitle" mask="separator.0"
+                                        thousandSeparator="," formControlName="price">
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('price').valid && (form.get('price').dirty || form.get('price').touched)">Please
+                                        enter price!</small>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-12">
+                                <div class="my_profile_setting_input form-group autocomplete-dropdown">
+                                    <label for="propertyTitle">Agent</label>
+                                    <ng-template #user let-r="result" let-t="term">
+                                        <small class="nameFilter">{{ r.first_name }} {{r.last_name}}</small>
+                                    </ng-template>
+                                    <input type="text" [ngbTypeahead]="searchUser" [resultTemplate]="user"
+                                        [inputFormatter]="userFormatter" class="form-control" id="propertyTitle"
+                                        formControlName="user_id">
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('name').valid && (form.get('name').dirty || form.get('name').touched)">Please
+                                        enter name!</small>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-12">
+                                <div class="my_profile_setting_textarea">
+                                    <label for="propertyDescription">Description</label>
+                                    <textarea class="form-control" id="propertyDescription" rows="5"
+                                        formControlName="description"></textarea>
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('description').valid && (form.get('description').dirty || form.get('description').touched)">Please
+                                        enter description!</small>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="propertyTitle">Lot Size (sqft)</label>
+                                    <input type="text" class="form-control" id="propertyTitle"
+                                        formControlName="lot_size">
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('lot_size').valid && (form.get('lot_size').dirty || form.get('lot_size').touched)">Please
+                                        enter lot size!</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="propertyTitle">Property Area (sqft)</label>
+                                    <input type="text" class="form-control" id="propertyTitle"
+                                        formControlName="property_area">
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('property_area').valid && (form.get('property_area').dirty || form.get('property_area').touched)">Please
+                                        enter property area!</small>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="propertyTitle">Address</label>
+                                    <input #search type="text" cursor-pointer class="form-control cursor-pointer"
+                                        id="propertyTitle" (click)="setLocationOnMap()" formControlName="address">
+                                    <small class="form-text text-danger"
+                                        *ngIf="!form.get('address').valid && (form.get('address').dirty || form.get('address').touched)">Please
+                                        enter address!</small>
+                                    <a href="javascript:void(0);"><button class="btn search-icon"
+                                            (click)="setLocationOnMap()" type="button"><span
+                                                class="flaticon-magnifying-glass"></span></button></a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-xl-6">
+                                <div class="my_profile_setting_input ui_kit_select_search form-group">
+                                    <label>Type</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick" formControlName="property_type_id">
+                                            <option [ngValue]=null>Type</option>
+                                            <option value="1">Sale</option>
+                                            <option value="2">Rent</option>
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('property_type_id').valid && (form.get('property_type_id').dirty || form.get('property_type_id').touched)">Please
+                                            enter property type!</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xl-6">
+                                <div class="my_profile_setting_input ui_kit_select_search form-group">
+                                    <label>Number of bed</label>
+                                    <div class="search_option_two">
+                                        <div class="candidate_revew_select">
+                                            <select class="selectpicker  show-tick"
+                                                    formControlName="no_of_bed_room">
+                                                <option [ngValue]=null>Number of bed</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20">20</option>
+                                                <option value="+20">+20</option>
+                                            </select>
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('no_of_bed_room').valid && (form.get('no_of_bed_room').dirty || form.get('no_of_bed_room').touched)">Please
+                                                enter no_of bed room!</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Number of bath</label>
+                                    <div class="search_option_two">
+                                        <div class="search_option_two">
+                                            <div class="candidate_revew_select">
+                                                <select class="selectpicker show-tick"
+                                                        formControlName="no_of_bath_room">
+                                                    <option [ngValue]=null>Number of bath</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                    <option value="14">14</option>
+                                                    <option value="15">15</option>
+                                                    <option value="16">16</option>
+                                                    <option value="17">17</option>
+                                                    <option value="18">18</option>
+                                                    <option value="19">19</option>
+                                                    <option value="20">20</option>
+                                                    <option value="+20">+20</option>
+                                                </select>
+                                                <small class="form-text text-danger"
+                                                    *ngIf="!form.get('no_of_bath_room').valid && (form.get('no_of_bath_room').dirty || form.get('no_of_bath_room').touched)">Please
+                                                    enter no of bath room!</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Garages</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker show-tick" formControlName="garage">
+                                            <option [ngValue]=null>Garages</option>
+                                            <option value="1">Yes</option>
+                                            <option [ngValue]=0>No</option>
+                                            <!-- <option>Others</option> -->
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('garage').valid && (form.get('garage').dirty || form.get('garage').touched)">Please
+                                            enter garage!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Kitchen</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick" formControlName="kitchen">
+                                            <option [ngValue]=null>Kichen</option>
+                                            <option [ngValue]=0>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>                                            
+                                            <option value="+20">+20</option>
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('kitchen').valid && (form.get('kitchen').dirty || form.get('kitchen').touched)">Please
+                                            enter kitchen!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Pool</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick" formControlName="pool">
+                                            <option [ngValue]=null>Pool</option>
+                                            <option value="1">Yes</option>
+                                            <option [ngValue]=0>No</option>
+                                            <!-- <option>Others</option> -->
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('pool').valid && (form.get('pool').dirty || form.get('pool').touched)">Please
+                                            enter pool!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Air Conditioner</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick" formControlName="air_conditioner">
+                                            <option [ngValue]=null>Air Conditioner</option>
+                                            <option [ngValue]=0>0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                            <option value="+20">+20</option>
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('air_conditioner').valid && (form.get('air_conditioner').dirty || form.get('air_conditioner').touched)">Please
+                                            enter air conditioner!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Garden</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick" formControlName="garden">
+                                            <option [ngValue]=null>Garden</option>
+                                            <option value="1">Yes</option>
+                                            <option [ngValue]=0>No</option>
+                                            <!-- <option>Others</option> -->
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('garden').valid && (form.get('garden').dirty || form.get('garden').touched)">Please
+                                            enter garden!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Furniture</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick" formControlName="furniture">
+                                            <option [ngValue]=null>Furniture</option>
+                                            <option value="1">Yes</option>
+                                            <option [ngValue]=0>No</option>
+                                            <!-- <option>Others</option> -->
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('furniture').valid && (form.get('furniture').dirty || form.get('furniture').touched)">Please
+                                            enter furniture!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="my_profile_setting_input form-group">
+                                    <label for="formGroupExamplePrice">Category</label>
+                                    <div class="candidate_revew_select">
+                                        <select class="selectpicker  show-tick"
+                                            formControlName="property_category_id">
+                                            <option [ngValue]=null>Category</option>
+                                            <option value="1">Single Family</option>
+                                            <option value="2">Multi Family</option>
+                                            <option value="3">Condominium</option>
+                                            <option value="4">Apartment</option>
+                                            <option value="5">Town Home</option>
+                                            <!--<option value="6">Land</option>-->
+                                        </select>
+                                        <small class="form-text text-danger"
+                                            *ngIf="!form.get('property_category_id').valid && (form.get('property_category_id').dirty || form.get('property_category_id').touched)">Please
+                                            enter property category id!</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="resume_uploader mb30">
+                                    <label class="upload">
+                                        <input type="file" multiple (change)="fileChangeEventProperty($event)"
+                                            accept=".gif, .jpg, .png">
+                                        <i class="flaticon-download mr-2"></i> Upload property Images
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <ul class="mb0">
+                                    <ng-container *ngFor="let img of images;let i=index">
+                                        <li class="list-inline-item">
+                                            <div class="portfolio_item">
+                                                <img class="img-fluid" src="{{img?.base_path+'/'+img?.system_name}}"
+                                                    alt="...">
+                                                <div class="edu_stats_list" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Delete">
+                                                    <a href="javascript:void(0);"
+                                                        (click)="deletePropertyImage(img,i)"><span
+                                                            class="flaticon-garbage"></span></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <div class="my_profile_setting_input mt-3">
+                                    <button class="btn btn2 float-left"
+                                        type="submit">{{id ? "Update Property" : "Upload Property"}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>
+<app-shared-modal-map #mapModal (onDoneEvent)="onDoneEvent($event)"></app-shared-modal-map>
