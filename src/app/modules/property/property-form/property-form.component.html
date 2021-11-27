@@ -358,7 +358,60 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-xl-12">
+
+                                <div class="row" 
+                                    style="margin-top: 20px; max-height: 200px; overflow-y: auto;" 
+                                    *ngIf="images.length > 0">
+
+                                    <div class="col-xl-12 feature-images-item"
+                                        *ngFor="let img of images;let i=index">
+
+                                        <img [src]="previewImage(img)" alt="..." style="position: relative;">
+                                        <span *ngIf="isFeatued(img)" class="block block-2">
+                                            <div class="ribbon"><span>Featured</span></div>
+                                        </span>
+
+                                        <div>
+                                            <!-- <label *ngIf="!isFeatued(img)" (click)="onMakeCoverPhoto(img)">Make cover photo</label> -->
+
+                                            <div class="edu_stats_list" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Delete" *ngIf="!isFeatued(img)">
+                                                <a href="javascript:void(0);"
+                                                    (click)="deletePropertyImage(img,i)"><span
+                                                        class="flaticon-garbage" style="color: red"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-xl-6">
+                                        <div class="upload-featur-images" (click)="onChooseFileCoverImage()">
+                                            <input type="file" id="upload-cover-images"
+                                                (change)="fileChangeEventPropertyCover($event)"
+                                                    accept=".gif, .jpg, .png" style="display: none;">
+                                                Upload Cover Image
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6">
+                                        <div class="upload-featur-images" (click)="onChooseFile()">
+                                            <input type="file" multiple id="upload-featur-images"
+                                                (change)="fileChangeEventProperty($event)"
+                                                    accept=".gif, .jpg, .png" style="display: none;">
+                                                Upload Images
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </div>
+
+                            <!-- <div class="col-xl-12">
                                 <div class="resume_uploader mb30">
                                     <label class="upload">
                                         <input type="file" multiple (change)="fileChangeEventProperty($event)"
@@ -370,21 +423,24 @@
                             <div class="col-lg-12">
                                 <ul class="mb0">
                                     <ng-container *ngFor="let img of images;let i=index">
-                                        <li class="list-inline-item">
+                                        <li class="list-inline-item" (mouseover)="idx = i" (mouseleave)="idx = null">
                                             <div class="portfolio_item">
-                                                <img class="img-fluid" src="{{img?.base_path+'/'+img?.system_name}}"
-                                                    alt="...">
+                                                <img class="img-fluid" [src]="previewImage(img)"
+                                                    alt="..." style="position: relative;" >
                                                 <div class="edu_stats_list" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Delete">
                                                     <a href="javascript:void(0);"
                                                         (click)="deletePropertyImage(img,i)"><span
                                                             class="flaticon-garbage"></span></a>
                                                 </div>
+
+                                                <button type="button" class="btn btn2 float-left cover-image" 
+                                                    *ngIf="idx === i">Cover Image</button>
                                             </div>
                                         </li>
                                     </ng-container>
                                 </ul>
-                            </div>
+                            </div> -->
 
                             <div class="col-xl-12">
                                 <div class="my_profile_setting_input mt-3">

@@ -35,10 +35,10 @@ export class PropertyDetailComponent implements OnInit {
 
         this.id = this.route.snapshot.params['id'];
         this.iconObject = {
-            url: '../assets/images/logo-blue.png',
+            url: '../assets/images/square.png',
             scaledSize: {
-                width: 50,
-                height: 60
+                width: 10,
+                height: 15
             }
         };
         // this.requestService.isAuthenticated()
@@ -175,6 +175,21 @@ export class PropertyDetailComponent implements OnInit {
 
     changeImage(image) {
         this.selectedImage = image;
+    }
+
+    onChangeImage(ac: 'NEXT' | 'PREVIOUS') {
+        const idx = this.allImages.findIndex(img=> this.selectedImage?.system_name === img?.system_name);
+        
+        const i = ac === 'NEXT' ? 1 : -1;
+        let nxtIdx = idx + i;
+        if (nxtIdx >= this.allImages.length) {
+            nxtIdx = 0;
+        }
+        else if (nxtIdx < 0) {
+            nxtIdx = this.allImages.length - 1;
+        }
+        
+        this.selectedImage = this.allImages[nxtIdx];
     }
 
     markUnFavorite(property) {

@@ -61,15 +61,15 @@
                                 <div class="col-sm-6 col-lg-6 col-xl-12">
                                     <div class="feat_property home7 style4" (click)="goToProperty(item.id)">
                                         <div class="thumb">
-                                            <div class="fp_single_item_slider">
+                                            <div class="fp_single_item_slider feature-img-slider">
                                                 <ng-container *ngIf="item?.media.length > 0">
-                                                    <ng-container *ngFor="let img of item?.media">
+                                                    <!-- <ng-container *ngFor="let img of item?.media"> -->
                                                         <div class="item">
                                                             <img class="img-whp"
-                                                                src="{{img?.base_path+'/'+img?.system_name}}"
+                                                                [src]="preview(item?.media)"
                                                                 alt="fp1.jpg">
                                                         </div>
-                                                    </ng-container>
+                                                    <!-- </ng-container> -->
                                                 </ng-container>
 
                                                 <ng-container *ngIf="item?.media.length == 0">
@@ -80,6 +80,7 @@
                                                 </ng-container>
                                             </div>
                                             <div class="thmb_cntnt style2">
+                                                <div class="property-type-ft" style="right: 0px;">{{item?.type_name}}</div>
                                                 <ul class="tag mb0">
                                                     <li class="list-inline-item  w-p"><a
                                                             routerLink="/pages/property/{{item?.id}}"
@@ -178,7 +179,9 @@
                                     [minZoom]="2" [zoomControl]="false">
                                     <ng-container *ngFor="let item of rows">
                                         <agm-marker [latitude]="item.lat" [longitude]="item.lng" [animation]="'DROP'"
-                                            [markerDraggable]="false"  [iconUrl]="iconObject">
+                                            [markerDraggable]="false" [iconUrl]="iconObject">
+                                            <!-- <agm-marker [latitude]="item.lat" [longitude]="item.lng" [animation]="'DROP'"
+                                            [markerDraggable]="false"  [iconUrl]="iconObject"> -->
 
                                             <agm-info-window>
                                                 <div class="card">

@@ -37,18 +37,24 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="spls_style_two mb30-520">
-                            <a class="popup-img "
-                               href="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}">
-                                <img class="img-fluid w100 image-side-single"
+                            <!-- <a class="popup-img "
+                               href="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"> -->
+                                <span class="flaticon-left-arrow feature-image-icon" 
+                                    *ngIf="allImages.length > 1"
+                                    [style.left.%]="selectedImage ? 1 : 5" (click)="onChangeImage('PREVIOUS')"></span>
+                               <img class="img-fluid w100 image-side-single" style="position: relative;"
                                      src="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"
                                      alt="1.jpg">
-                            </a>
+                                <span class="flaticon-right-arrow feature-image-icon" 
+                                    *ngIf="allImages.length > 1"
+                                    [style.right.%]="selectedImage ? 1 : 5" (click)="onChangeImage('NEXT')"></span>
+                            <!-- </a> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-5 col-lg-4">
-                <div class="row">
+            <div class="col-sm-5 col-lg-4" style="max-height: 470px;">
+                <div class="row features-image-container">
                     <ng-container *ngFor="let item of images">
                         <div class="col-sm-6 col-lg-6">
                             <div class="spls_style_two mb30">
@@ -63,7 +69,8 @@
                     </ng-container>
                 </div>
                 <div class="form-group mb0">
-                    <button type="button" class="btn btn-lg btn-thm" (click)="isShowAllImages()">{{showImageBtnText}}</button>
+                    <button type="button" style="margin-top: 10px;"
+                        class="btn btn-lg btn-thm" (click)="isShowAllImages()">{{showImageBtnText}}</button>
                 </div>                
             </div>
         </div>

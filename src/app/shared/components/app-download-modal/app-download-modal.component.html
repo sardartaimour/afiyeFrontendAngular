@@ -1,4 +1,5 @@
-<div bsModal #appDownloadModal="bs-modal" class="modal fade map_modal" [config]="{backdrop: false}" tabindex="-1" role="dialog"
+<div bsModal #appDownloadModal="bs-modal" class="modal fade map_modal" 
+    [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
      aria-labelledby="dialog-child-name">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -11,9 +12,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-lg-12 col-md-12">
-                        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <div class="row" style="margin-bottom:5px;">

@@ -22,6 +22,10 @@ export class PropertyFormComponent implements OnInit {
 
   searching = false;
   searchFailed = false;
+  idx = null;
+  newFiles = [];
+  filesFormData = new FormData();
+
 
   form: FormGroup;
   @Input() title: string = '';
@@ -131,48 +135,114 @@ export class PropertyFormComponent implements OnInit {
 
   }
 
+  onChooseFileCoverImage() {
+    document.getElementById('upload-cover-images').click();
+  }
+
+  onChooseFile() {
+    document.getElementById('upload-featur-images').click();
+  }
+
   public fileChangeEventProperty(fileInput: any) {
+
+    if (!this.id && !this.form.valid) {
+      this.toasterService.info('Info', 'Please fill form and then upload files');
+      return;
+    }
+    
     console.log("EditProfileComponent -> fileChangeEventProfile -> fileInput", fileInput);
-    var files = fileInput.target.files;
+    const files: FileList = fileInput.target.files;
     if (files.length > 5) {
       this.toasterService.error("you cannot select files more than 5");
       return;
     }
-    if (!this.id) {
-      markFormGroupTouched(this.form);
-      console.log("onSubmit -> this.form)", this.form.controls);
-      if (!this.form.valid) {
-        this.toasterService.error("Please fill All required properties");
-        return;
 
-      }
-      let addPropertyStatus = this.addProperty();
-      console.log("PropertyFormComponent -> fileChangeEventProperty -> addPropertyStatus", addPropertyStatus)
-      addPropertyStatus.then((res) => {
-        if (res && res.status) {
-          this.uploadFiles(files, res.result.data.id);
-        }
-      }).catch((error) => {
-        console.log("Promise rejected with ", error);
-        this.toasterService.error(error['error'] ? error['error']['message'] : error.message, "Error");
-      });
+    this.uploadFiles(files, this.id);
+    // for (let i = 0; i < files.length; i++) {
+    //   let file: File = files[i];
+    //   this.images.push(file);
+    // }
+
+    // if (!this.id) {
+    //   markFormGroupTouched(this.form);
+    //   console.log("onSubmit -> this.form)", this.form.controls);
+    //   if (!this.form.valid) {
+    //     this.toasterService.error("Please fill All required properties");
+    //     return;
+
+    //   }
+      // let addPropertyStatus = this.addProperty();
+    //   console.log("PropertyFormComponent -> fileChangeEventProperty -> addPropertyStatus", addPropertyStatus)
+    //   addPropertyStatus.then((res) => {
+    //     if (res && res.status) {
+    //       this.uploadFiles(files, res.result.data.id);
+    //     }
+    //   }).catch((error) => {
+    //     console.log("Promise rejected with ", error);
+    //     this.toasterService.error(error['error'] ? error['error']['message'] : error.message, "Error");
+    //   });
+    //   return;
+    // }
+    // else {
+      // this.uploadFiles(files, this.id);
+    // }
+  }
+
+  public fileChangeEventPropertyCover(fileInput: any) {
+
+    if (!this.id && !this.form.valid) {
+      this.toasterService.info('Info', 'Please fill form and then upload files');
       return;
     }
-    else {
-      this.uploadFiles(files, this.id);
-    }
+    const files: FileList = fileInput.target.files;
 
+    if (files.length) {
+      // const ft = this.newFiles.filter(d => d.is_featured != "1" || d.is_featured != 1);
+      // this.newFiles = ft.length ? ft : this.newFiles;
+
+      if (this.id && this.images.length) {
+        this.images.forEach((img, idx)=> {
+          if ([1, "1"].includes(img.is_featured)) {
+            this.deletePropertyImage(img, idx);
+          }
+        });
+      }
+      this.filesToUpload(files[0], "1");
+    }
   }
-  uploadFiles(files, id) {
-    for (var i = 0; i < files.length; i++) {
-      console.log(files[i]);
-      let formData = new FormData();
-      formData.append('file', files[i]);
-      formData.append('property_id', id);
-      formData.append('is_featured', "0");
-      this.uploadMedia(formData, 'property', id);
-    }
 
+  uploadFiles(files, id) {
+  
+    for (var i = 0; i < files.length; i++) {
+      // let isfeatured = i === 0 ? "1" : "0";
+      // console.log(files[i]);
+      // let formData = new FormData();
+      // formData.append('file', files[i]);
+      // formData.append('property_id', id);
+      // formData.append('is_featured', isfeatured);
+      // this.uploadMedia(formData, 'property', id);
+      this.filesToUpload(files[i]);
+    }
+  }
+
+  filesToUpload(file, is_fetured="0")
+  {
+    let formData = new FormData();
+    formData.append('file', file);
+    formData.append('property_id', this.id);
+    formData.append('is_featured', is_fetured);
+    this.uploadMedia(formData, 'property', this.id);
+    // this.newFiles.push(formData);
+    // this.filesFormData.append('', formData);
+    // console.log('files=======> ', this.newFiles)
+  }
+
+  finalFileUpload() {
+    if (this.newFiles.length) {
+      this.newFiles.forEach(formData => {
+        this.uploadMedia(formData, 'property', this.id);
+      })
+    }
   }
 
 
@@ -256,6 +326,8 @@ export class PropertyFormComponent implements OnInit {
         }
         this.update(formData);
       }
+
+      // this.finalFileUpload();
     }
     else {
       this.toasterService.error("Please try again! Something went wrong", "Error");
@@ -439,15 +511,53 @@ export class PropertyFormComponent implements OnInit {
   }
 
   deletePropertyImage(image, i) {
-    this.requestService.sendRequest(PropertyUrls.DELETE_POST, 'delete_with_body', { ids: [image.media_id] }).subscribe(res => {
+    if (image.hasOwnProperty('media_id')) {
+      this.requestService.sendRequest(PropertyUrls.DELETE_POST, 'delete_with_body', { ids: [image.media_id] }).subscribe(res => {
+        if (res.status) {
+          this.toasterService.success(res.message, "Success");
+          this.images.splice(i, 1)
+        } else {
+          this.toasterService.error(res.message, "Error");
+        }
+      }, error => {
+        this.toasterService.error(error['error'] ? error['error']['message'] : error['error'] ? error['error']['message'] : error.message, "Error");
+      });
+    }
+    else {
+      this.images.splice(i, 1);
+    }
+  }
+
+  previewImage(img: any) {
+    if (img.hasOwnProperty('base_path')) {
+      return img?.base_path+'/'+img?.system_name;
+    }
+    else {
+      return img.name;
+    }
+  }
+
+  onMakeCoverPhoto(img) {
+
+    const payload = {
+      is_featured: "1",
+      id: img.hasOwnProperty('media_id') ? img.media_id : (img.hasOwnProperty('id') ? img.id : null)
+    }
+
+    this.requestService.sendRequest(PropertyUrls.PROPERTY_MEDIA_COVER_FEATURED, 'POST', payload).subscribe(res => {
       if (res.status) {
-        this.toasterService.success(res.message, "Success");
-        this.images.splice(i, 1)
+        img['is_featured'] = "1";
+        this.toasterService.success(res.message, 'Success');
       } else {
         this.toasterService.error(res.message, "Error");
       }
     }, error => {
       this.toasterService.error(error['error'] ? error['error']['message'] : error['error'] ? error['error']['message'] : error.message, "Error");
-    });
+    })
+  }
+
+  isFeatued(img)
+  {
+    return [1, "1"].includes(img['is_featured']) ? true : false;
   }
 }

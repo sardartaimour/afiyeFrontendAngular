@@ -23,16 +23,16 @@
                             <ul class="feature_property_half_clist mb0">
                                 <li class="extrawide list-inline-item w-100 ml-0">
                                     <div class="feat_property home7 style4 mb-3 mt-3" (click)="goToProperty(item)">
-                                        <div class="thumb">
-                                            <div class="fp_single_item_slider">
+                                        <div class="thumb" style="position: relative;">
+                                            <div class="fp_single_item_slider feature-img-slider">
                                                 <ng-container *ngIf="item?.media.length > 0">
-                                                    <ng-container *ngFor="let img of item?.media">
+                                                    <!-- <ng-container *ngFor="let img of item?.media"> -->
                                                         <div class="item">
                                                             <img class="img-whp"
-                                                                src="{{img?.base_path+'/'+img?.system_name}}"
+                                                                [src]="preview(item?.media)"
                                                                 alt="fp1.jpg">
                                                         </div>
-                                                    </ng-container>
+                                                    <!-- </ng-container> -->
                                                 </ng-container>
 
                                                 <ng-container *ngIf="item?.media.length == 0">
@@ -42,6 +42,9 @@
                                                     </div>
                                                 </ng-container>
                                             </div>
+
+                                            <div class="property-type-ft">{{item?.type_name}}</div>
+
                                             <div class="thmb_cntnt style2">
                                                 <ul class="tag mb0">
                                                     <li class="list-inline-item  w-p"><a href="javascript:void(0);">{{item?.price | currency: 'GH₵' : 'symbol' : '1.0-0'}}</a>

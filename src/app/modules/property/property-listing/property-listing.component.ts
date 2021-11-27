@@ -67,10 +67,10 @@ export class PropertyListingComponent implements OnInit {
   }
     ngOnInit(): void {
         this.iconObject = {
-            url: '../assets/images/logo-blue.png',
+            url: '../assets/images/square.png',
             scaledSize: {
-                width: 50,
-                height: 60
+                width: 10,
+                height: 15
             }
         };
         this.labelOptions = {
@@ -187,6 +187,11 @@ export class PropertyListingComponent implements OnInit {
       this.zoom = 17;
     }, 500);
 
+  }
+
+  preview(media) {
+    const ft = media.filter(m=> ['1', 1].includes(m.is_featured));
+    return ft.length ? ft[0]?.base_path+'/'+ft[0]?.system_name : media[0]?.base_path+'/'+media[0]?.system_name;
   }
 }
 

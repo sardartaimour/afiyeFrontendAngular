@@ -12,3 +12,16 @@
     width: 165px;
     height: 103px;
 }
+
+.features-image-container {
+    max-height: calc(100% - 60px);
+    overflow-y: auto;
+}
+
+.feature-image-icon {
+    position: absolute;
+    top: 45%;
+    z-index: 1;
+    cursor: pointer;
+    color: #3089ed;
+}

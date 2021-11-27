@@ -4809,12 +4809,15 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
   border-left: 1px solid #ebebeb;
   padding-left: 10px;
 }
+
 .feat_property.home7.style4:hover .fp_single_item_slider.owl-carousel.owl-theme.owl-loaded .owl-prev{
   left: 20px;
 }
 .feat_property.home7.style4:hover .fp_single_item_slider.owl-carousel.owl-theme.owl-loaded .owl-next{
   right: 20px;
 }
+
+
 .fp_single_item_slider.owl-carousel.owl-theme.owl-loaded .owl-prev{
   background-color: transparent;
   color: #ffffff;
@@ -4839,6 +4842,14 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+
+.feature-img-slider.owl-carousel.owl-theme.owl-loaded .owl-prev {
+  display: none !important;
+}
+.feature-img-slider.owl-carousel.owl-theme.owl-loaded .owl-next {
+  display: none !important;
+}
+
 .fp_single_item_slider.owl-theme .owl-nav{
   margin: 0;
 }

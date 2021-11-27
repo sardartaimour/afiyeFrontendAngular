@@ -185,5 +185,10 @@ export class PropertySharedComponent implements OnInit {
     this.router.navigate(["/property/edit/" + property.id])
   }
 
+  preview(media) {
+    const ft = media.filter(m=> ['1', 1].includes(m.is_featured));
+    return ft.length ? ft[0]?.base_path+'/'+ft[0]?.system_name : media[0]?.base_path+'/'+media[0]?.system_name;
+}
+
 
 }

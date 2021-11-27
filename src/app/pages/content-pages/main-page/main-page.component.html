@@ -15,7 +15,7 @@
                                     aria-selected="true">Buy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="pills-profile-tab" (click)="changeTab('2')" data-toggle="pill"
+                                <a class="nav-link" id="pills-profile-tab" (click)="changeTab('2', '#search-field-buy')" data-toggle="pill"
                                     href="#pills-profile" role="tab" aria-controls="pills-profile"
                                     aria-selected="false">Rent</a>
                             </li>
@@ -24,14 +24,19 @@
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div class="home1-advnc-search">
+                                    
                                     <ul class="h1ads_1st_list mb0 row">
                                         <li class="list-inline-item col-md-9 mr-0">
                                             <div class="form-group w-100">
+
+                                                <input type="text" class="form-control" placeholder="Search" 
+                                                    id="search-field-rent" (keyup)="initAutocomplete('#search-field-rent')">
+
                                                 <!-- <input type="text" class="form-control" placeholder="Enter a location"> -->
 
-                                                <a (click)="openMapModal()" href="javascript:void(0);"><button
+                                                <!-- <a (click)="openMapModal()" href="javascript:void(0);"><button
                                                         class="btn btn-search-prop btn-block">{{value}}</button></a>
-                                                <span class="flaticon-maps-and-flags"></span>
+                                                <span class="flaticon-maps-and-flags"></span> -->
                                             </div>
                                         </li>
 
@@ -50,10 +55,13 @@
                                     <ul class="h1ads_1st_list mb0 row">
                                         <li class="list-inline-item col-md-9 mr-0">
                                             <div class="form-group w-100">
-                                                <!-- <input type="text" class="form-control" placeholder="Enter a location"> -->
+
+                                                <input type="text" class="form-control" placeholder="Search" 
+                                                    id="search-field-buy" (keyup)="initAutocomplete('#search-field-buy')">
+                                                <!-- <input type="text" class="form-control" placeholder="Enter a location">
                                                 <a (click)="openMapModal()" href="javascript:void(0);"><button
                                                         class="btn btn-search-prop btn-block">{{value}}</button></a>
-                                                <span class="flaticon-maps-and-flags"></span>
+                                                <span class="flaticon-maps-and-flags"></span> -->
                                             </div>
                                         </li>
 
@@ -168,16 +176,18 @@
                     <ng-container *ngFor="let item of rowsMostFavorite;let i=index">
                         <div class="item">
                             <div class="feat_property" (click)="goToProperty(item.property_id)">
-                                <div class="thumb">
+                                <div class="thumb" style="position: relative;">
                                     <ng-container *ngIf="item.media.length == 0">
                                         <img class="img-whp" src="assets/images/defaultd.jpeg" alt="fp1.jpg"
                                             height="250" width="338">
                                     </ng-container>
                                     <ng-container *ngIf="item.media.length > 0">
                                         <img class="img-whp" height="250" width="338"
-                                            src="{{item.media[0]?.base_path+'/'+item.media[0]?.system_name}}"
+                                            [src]="preview(item.media)"
                                             alt="fp1.jpg">
                                     </ng-container>
+
+                                    <div class="property-type-ft">{{item?.type_name}}</div>
 
                                     <div class="thmb_cntnt">
                                         <ul class="tag mb0">
