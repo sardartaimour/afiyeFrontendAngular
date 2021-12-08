@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
       "last_name": ["", Validators.required],
       "phone_no": ["", Validators.required],
       "fcm_token": ["tokens", Validators.required],
-      "role_id": [3, Validators.required],
+      "role_id": [4, Validators.required],
       "gender": ["", Validators.required],
       repeat: [null, Validators.required],
     }, { validator: this.checkIfMatchingPasswords('password', 'repeat') });

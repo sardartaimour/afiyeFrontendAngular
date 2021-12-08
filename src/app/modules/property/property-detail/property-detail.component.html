@@ -40,13 +40,13 @@
                             <!-- <a class="popup-img "
                                href="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"> -->
                                 <span class="flaticon-left-arrow feature-image-icon" 
-                                    *ngIf="allImages.length > 1"
+                                    *ngIf="allImages.length > 1" style="font-size: 30px;"
                                     [style.left.%]="selectedImage ? 1 : 5" (click)="onChangeImage('PREVIOUS')"></span>
                                <img class="img-fluid w100 image-side-single" style="position: relative;"
                                      src="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"
                                      alt="1.jpg">
                                 <span class="flaticon-right-arrow feature-image-icon" 
-                                    *ngIf="allImages.length > 1"
+                                    *ngIf="allImages.length > 1" style="font-size: 30px;"
                                     [style.right.%]="selectedImage ? 1 : 5" (click)="onChangeImage('NEXT')"></span>
                             <!-- </a> -->
                         </div>

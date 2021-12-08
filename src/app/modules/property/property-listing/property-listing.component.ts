@@ -34,6 +34,10 @@ export class PropertyListingComponent implements OnInit {
     this.globalService.mapData$.subscribe(res => {
       console.log("PropertyListingComponent -> constructor -> res", res);
       this.formValues = res;
+      if (res && res.hasOwnProperty('lat') && res.hasOwnProperty('lng') && res.lat && res.lng) {
+        this.myLatLng =  { lat: res.lat, lng: res.lng };
+        this.zoom = 10;
+      }
     })
     // this.form = this.fb.group(this.formElements());
   }
