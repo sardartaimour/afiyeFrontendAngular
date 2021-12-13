@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { RequestService } from 'src/app/shared/services/request.service';
 import { GlobalService } from 'src/app/shared/services/global.service';
@@ -52,7 +52,8 @@ export class MessagesComponent implements OnInit {
     private toasterService: ToastrService,
     private ngPopups: NgPopupsService,
     private fb: FormBuilder,
-    private localStorage: LocalStorage) {
+    private localStorage: LocalStorage,
+    private cdr: ChangeDetectorRef) {
     this.form = this.fb.group(this.formElements());
     this.loggedInUser = this.requestService.getLoggedInUser();
     this.globalService.currentUserMessage$.subscribe(user => {
@@ -98,12 +99,15 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  getMessages() {
+  getMessages(reload = false) {
     let params = {
       id: this.selectedUserHead.id,
       pagination: 1,
       per_page: 5,
       page: this.presentPage
+    }
+    if (reload) {
+      this.messages = [];
     }
     this.requestService.sendRequest(ChatUrls.ALL_GET, 'GET', params).subscribe(res => {
       this.showLoading = false;
@@ -115,7 +119,10 @@ export class MessagesComponent implements OnInit {
           this.scrollToBottom(300);
         }
         console.log("MessagesComponent -> getMessages ->  this.messages", this.messages)
-        console.log("MessagesComponent -> getMessages -> this.messages", this.messages)
+        console.log("MessagesComponent -> getMessages -> this.messages", this.messages);
+        // if (reload) {
+          
+        // }
 
       } else {
         this.toasterService.error(res.message, "Error");
@@ -223,7 +230,7 @@ export class MessagesComponent implements OnInit {
           this.requestService.sendRequest(ChatUrls.DELETE_POST, 'Delete', { ids: [row.id] }).subscribe(res => {
             console.log('apiresponse', res);
             if (res.status) {
-              this.getMessages();
+              this.getMessages(true);
             } else {
               this.toasterService.error(res.message, "Error");
             }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, NgZone, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, NgZone, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -18,13 +18,14 @@ declare var $: any;
   templateUrl: './property-form.component.html',
   styleUrls: ['./property-form.component.scss']
 })
-export class PropertyFormComponent implements OnInit {
+export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   searching = false;
   searchFailed = false;
   idx = null;
   newFiles = [];
   filesFormData = new FormData();
+  years: any[] = [];
 
 
   form: FormGroup;
@@ -68,6 +69,11 @@ export class PropertyFormComponent implements OnInit {
     // Validators.pattern("^ @]*@[^ @]*")
     this.form = this.fb.group(this.formElements());
 
+    let d = new Date().getFullYear();
+    for (let i=0; i<100; i++) {
+      this.years.push(d - i);
+    }
+
 
   }
 
@@ -95,6 +101,7 @@ export class PropertyFormComponent implements OnInit {
       "property_type_id": [null, Validators.required],
       // "user_id": [null, Validators.required],
       "feature_media": [null],
+      "year_built": [null, Validators.required]
     }
   }
 
@@ -120,6 +127,10 @@ export class PropertyFormComponent implements OnInit {
       this.data = this.editData;
       this.responseData();
     }
+  }
+
+  ngAfterViewInit() {
+    // this.searchElementRef.nativeElement.
   }
 
   responseData() {
@@ -456,7 +467,7 @@ export class PropertyFormComponent implements OnInit {
 
   onDoneEvent(placeData) {
     let form = this.form.value;
-    console.log("MainPageComponent -> onDoneEvent -> placeData", placeData);
+    console.log("MainPageComponent -> onDoneEvent -> placeData ---- ", placeData);
     for (const property in placeData) {
       if (form.hasOwnProperty(property)) {
         if (property == "formatted_address") {
@@ -560,4 +571,62 @@ export class PropertyFormComponent implements OnInit {
   {
     return [1, "1"].includes(img['is_featured']) ? true : false;
   }
+
+  initAutocomplete(id: string) 
+    {
+        this.mapsAPILoader.load().then(() => {
+            let searchField = document.querySelector(id) as HTMLInputElement;
+            
+        let autocomplete = new google.maps.places.Autocomplete(searchField, {
+            componentRestrictions: { country: ["PK"] },
+            fields: ["address_components", "geometry"],
+          //   types: ["address"],
+              types: ["geocode", "establishment"]
+          });
+          searchField && searchField.focus();
+        
+          // When the user selects an address from the drop-down, populate the
+          // address fields in the form.
+          autocomplete.addListener("place_changed", () => {
+              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+  
+              // let address = {
+              //     'address': '',
+              //     'city': '',
+              //     'zip': '',
+              //     'country': '',
+              //     'lat': place.geometry.location.lat(),
+              //     'lng': place.geometry.location.lng(),
+              //     'state': '',
+              //     "formatted_address": ''
+              // }
+  
+              // if (place.address_components) {
+              //     for (let i = 0; i < place.address_components.length; i++) {
+              //         let addressType = place.address_components[i].types[0];
+              //         if (this.componentForm[addressType]) {
+              //             let val = place.address_components[i][this.componentForm[addressType]];
+              //             address = this.storeAddress(addressType, val, address);
+              //         }
+              //     }
+              // } 
+              
+              // let route = this.address.route;
+              // if ("route" in this.address) {
+              // route = route
+              // }
+              // if (!route) {
+              // route = place['formatted_address'];
+              // }
+              // if ("street_number" in this.address) {
+              //     route = this.address.street_number + " " + route
+              // }
+              
+              // address['address'] = route;
+  
+              // console.log('final check of address => ', address)
+              // this.onDoneEvent(address, true);
+          });
+        });
+    }
 }

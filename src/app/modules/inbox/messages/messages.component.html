@@ -56,7 +56,7 @@
                         [infiniteScrollDistance]="scrollDistance" [infiniteScrollUpDistance]="scrollUpDistance"
                         [scrollWindow]="false" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"
                         [infiniteScrollDisabled]="infiniteScrollDisabled" (scrolledUp)="onUp()">
-                        <ul class="chatting_content">
+                        <ul class="chatting_content" *ngIf="messages.length > 0">
                             <ng-container *ngFor="let item of messages;let i=index">
                                 <li class="media sent" *ngIf="item?.sender_id != requestService.getLoggedInUserId()">
                                     <div class="media-body">

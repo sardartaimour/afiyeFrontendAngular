@@ -40,13 +40,13 @@
                             <!-- <a class="popup-img "
                                href="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"> -->
                                 <span class="flaticon-left-arrow feature-image-icon" 
-                                    *ngIf="allImages.length > 1" style="font-size: 30px;"
+                                    *ngIf="allImages.length > 1" style="font-size: 32px;"
                                     [style.left.%]="selectedImage ? 1 : 5" (click)="onChangeImage('PREVIOUS')"></span>
                                <img class="img-fluid w100 image-side-single" style="position: relative;"
                                      src="{{selectedImage ? selectedImage?.base_path+'/'+selectedImage?.system_name :'assets/images/defaultd.jpeg'}}"
                                      alt="1.jpg">
                                 <span class="flaticon-right-arrow feature-image-icon" 
-                                    *ngIf="allImages.length > 1" style="font-size: 30px;"
+                                    *ngIf="allImages.length > 1" style="font-size: 32px;"
                                     [style.right.%]="selectedImage ? 1 : 5" (click)="onChangeImage('NEXT')"></span>
                             <!-- </a> -->
                         </div>
@@ -203,16 +203,25 @@
                                     <ul class="list-inline-item">
 
                                         <li>
-                                            <p>Furniture :</p>
+                                            <p>Furniture :
+                                            <span>{{singleProperty?.furniture == 1 ? "Yes":"No"}}</span>
+                                            </p>
                                         </li>
                                         <li>
-                                            <p>Category :</p>
+                                            <p>Category :
+                                                <span>{{singleProperty?.category_name}}</span>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>Year Built : 
+                                                <span>{{singleProperty?.year_built}}</span>
+                                            </p>
                                         </li>
                                         <!-- <li>
                                             <p>Status :</p>
                                         </li> -->
                                     </ul>
-                                    <ul class="list-inline-item">
+                                    <!-- <ul class="list-inline-item">
 
                                         <li>
                                             <p><span>{{singleProperty?.furniture == 1 ? "Yes":"No"}}</span></p>
@@ -220,10 +229,13 @@
                                         <li>
                                             <p><span>{{singleProperty?.category_name}}</span></p>
                                         </li>
-                                        <!-- <li>
+                                        <li>
+                                            <p><span>{{singleProperty?.year_built}}</span></p>
+                                        </li>
+                                        <li>
                                             <p><span>{{singleProperty?.status_name}}</span></p>
-                                        </li> -->
-                                    </ul>
+                                        </li>
+                                    </ul> -->
                                 </div>
                             </div>
                         </div>

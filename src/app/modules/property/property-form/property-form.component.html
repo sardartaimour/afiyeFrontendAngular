@@ -94,7 +94,12 @@
                             <div class="col-lg-12">
                                 <div class="my_profile_setting_input form-group">
                                     <label for="propertyTitle">Address</label>
-                                    <input #search type="text" cursor-pointer class="form-control cursor-pointer"
+                                    <!-- <input type="text" class="form-control" placeholder="Search" formControlName="address"
+                                        id="add-edit-search-field-buy" (keyup)="initAutocomplete('#add-edit-search-field-buy')"> -->
+
+                                        <!-- <input style="display: none" #search type="text" cursor-pointer class="form-control cursor-pointer"
+                                        id="propertyTitle" (click)="setLocationOnMap()" formControlName="address"> -->
+                                    <input readonly #search type="text" cursor-pointer class="form-control cursor-pointer"
                                         id="propertyTitle" (click)="setLocationOnMap()" formControlName="address">
                                     <small class="form-text text-danger"
                                         *ngIf="!form.get('address').valid && (form.get('address').dirty || form.get('address').touched)">Please
@@ -120,6 +125,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6 col-xl-6">
+                                <div class="my_profile_setting_input ui_kit_select_search form-group">
+                                    <label>Year Built</label>
+                                    <div class="search_option_two">
+                                        <div class="candidate_revew_select">
+                                            <select class="selectpicker  show-tick"
+                                                    formControlName="year_built">
+                                                <option [ngValue]=null>Year Built</option>
+                                                <option [value]="v" *ngFor="let v of years">{{v}}</option>
+                                            </select>
+                                            <small class="form-text text-danger"
+                                                *ngIf="!form.get('year_built').valid && (form.get('year_built').dirty || form.get('year_built').touched)">Please
+                                                enter built year!</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-6 col-xl-6">
                                 <div class="my_profile_setting_input ui_kit_select_search form-group">
                                     <label>Number of bed</label>

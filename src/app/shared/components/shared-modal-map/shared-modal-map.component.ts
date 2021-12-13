@@ -207,7 +207,8 @@ export class SharedModalMapComponent implements OnInit {
   }
 
   formValues(place) {
-    if (place.address_components) {
+    console.log('app shared m=> ', place)
+    if (place && place.address_components) {
       for (let i = 0; i < place.address_components.length; i++) {
         let addressType = place.address_components[i].types[0];
         if (this.componentForm[addressType]) {
@@ -222,7 +223,7 @@ export class SharedModalMapComponent implements OnInit {
     if ("route" in this.address) {
       route = route
     }
-    if (!route) {
+    if (!route && place) {
       route = place['formatted_address'];
     }
     if ("street_number" in this.address) {
@@ -234,7 +235,7 @@ export class SharedModalMapComponent implements OnInit {
 
     // console.log("Address Model", this.address);
     //verify result
-    if (place.geometry === undefined || place.geometry === null) {
+    if (!place || place.geometry === undefined || place.geometry === null) {
       return;
     }
     this.latitude = place.geometry.location.lat;
@@ -321,7 +322,7 @@ export class SharedModalMapComponent implements OnInit {
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          console.log("searchAddress -> place", place);
+          console.log("searchAddress -> place ==== > ", place);
           this.form.get('formatted_address').setValue(place.formatted_address);
           if (place.address_components) {
             for (var i = 0; i < place.address_components.length; i++) {

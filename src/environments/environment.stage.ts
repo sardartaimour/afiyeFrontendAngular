@@ -2,7 +2,7 @@ export const environment = {
     production: true,
     localStoragePrefix: 'afiye-front',
     // apiUrl: "https://cors-anywhere.herokuapp.com/http://staging.afiyegroup.com/api/",
-    apiUrl: "https://staging.afiyegroup.com/api/",
+    apiUrl: "https://stag.afiyegroup.com/api/",
     whitelistedDomains: ['staging.afiyegroup.com', 'trhov.com', "cors-anywhere.herokuapp.com"],
     debugging: true,
     mapKey: 'AIzaSyDM5gNXWjjVkrckut-qj6na2UxamRkZzZ4',
