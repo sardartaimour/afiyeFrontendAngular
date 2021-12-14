@@ -135,6 +135,10 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   responseData() {
     this.form.patchValue(this.data);
+    if (this.data['lat'] && this.data['lng']) {
+      this.getAddress(this.data['lat'], this.data['lng']);
+    }
+
     setTimeout(() => {
       $('.selectpicker').selectpicker('refresh');
     }, 500);
@@ -468,19 +472,65 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   onDoneEvent(placeData) {
     let form = this.form.value;
     console.log("MainPageComponent -> onDoneEvent -> placeData ---- ", placeData);
-    for (const property in placeData) {
-      if (form.hasOwnProperty(property)) {
-        if (property == "formatted_address") {
-          this.form.get("address").setValue(placeData[property]);
-        } else {
-          this.form.get(property).setValue(placeData[property]);
-        }
-      }
-      this.form.get("address").setValue(placeData["formatted_address"]);
 
-      console.log(`${property}: ${placeData[property]}`);
+    if (form['lat'] && form['lng']) {
+      this.getAddress(form['lat'], form['lng']);
+    }
+    else {
+     for (const property in placeData) {
+        if (form.hasOwnProperty(property)) {
+          if (property == "formatted_address") {
+            this.form.get("address").setValue(placeData[property]);
+          } else {
+            this.form.get(property).setValue(placeData[property]);
+          }
+        }
+        this.form.get("address").setValue(placeData["formatted_address"]);
+
+        console.log(`${property}: ${placeData[property]}`);
+      }
     }
   }
+
+  getAddress(lat: any, lng: any) {
+    console.log('in functions => ', lat, lng);
+
+    let geocoder = new google.maps.Geocoder();
+    let latlng = new google.maps.LatLng(lat, lng);
+
+    let request = { LatLng: latlng };
+    geocoder.geocode({ location: latlng }, (results, status) => {
+      if (status !== google.maps.GeocoderStatus.OK) {
+        alert(JSON.stringify(status));
+      }
+      // This is checking to see if the Geoeode Status is OK before proceeding
+      if (status == google.maps.GeocoderStatus.OK) {
+        console.log(results);
+        this.getFormatedAddress(results)
+        // var address = (results[0].formatted_address);
+        // alert(JSON.stringify(address));
+      }
+    });
+  }
+
+  getFormatedAddress(results) {
+    console.log('Formated Address => ', results)
+    let isFind = false;
+    if(results && results.length) {
+        ['neighborhood', 'sublocality', 'locality', 'administrative_area_level_1', 'administrative_area_level_2', 'country', 'route'].forEach(r => {
+          
+          const ft = results.filter(res => res.types.indexOf(r) !== -1);
+          if (ft && ft.length) {
+            if (!isFind) {
+              console.log('checko =>>>> ', ft, r)
+              this.form.get('address').setValue(ft[0].formatted_address);
+            }
+            isFind = true;
+          }
+         
+        });
+    }
+}
 
 
   searchUser = (text$: Observable<string>) =>
