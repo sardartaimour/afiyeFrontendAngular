@@ -15,7 +15,8 @@
 
                         <ul>
                             <ng-container *ngFor="let item of chatHeads">
-                                <li class="contact" [class.active]="item.user?.id == selectedUserHead?.user.id">
+                                <li class="contact" style="border-bottom: 1px solid lightgrey;"
+                                    [class.active]="item.user?.id == selectedUserHead?.user.id">
                                     <a href="javascript:void(0);" (click)="selectUser(item)">
                                         <div class="wrap">
 
