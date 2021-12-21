@@ -21,6 +21,7 @@ export class SharedModalMapComponent implements OnInit {
   currentPlace: any;
   showTable: boolean;
   machine = [];
+  disableBtn: boolean = true;
   componentForm = {
     street_number: 'short_name',
     route: 'long_name',
@@ -89,7 +90,7 @@ export class SharedModalMapComponent implements OnInit {
     if (obj) {
       // this.form.get('address').setValue(obj.address);
       this.form.patchValue(obj);
-      console.log("this.form.value", this.form.value);
+      // console.log("this.form.value", this.form.value);
     }
 
   }
@@ -117,8 +118,9 @@ export class SharedModalMapComponent implements OnInit {
   setCurrentPosition() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
+        console.log('current => ', this.form.value)
+        this.latitude = this.form.get('lat').value ? this.form.get('lat').value : position.coords.latitude ;
+        this.longitude = this.form.get('lng').value ? this.form.get('lng').value : position.coords.longitude;
         let data = {
           coords: {
             lat: position.coords.latitude,
@@ -206,8 +208,37 @@ export class SharedModalMapComponent implements OnInit {
     }
   }
 
+  getFormatedAddress(results) {
+    
+    let isFind = false;
+    let place = results && results.length ?  results[0] : null;
+
+    if(results && results.length) {
+        ['neighborhood', 'sublocality', 'locality', 'administrative_area_level_1', 'administrative_area_level_2', 'country', 'plus_code'].forEach(r => {
+          
+          const ft = results.filter(res => res.types.indexOf(r) !== -1);
+          if (ft && ft.length) {
+            if (!isFind) {
+              // console.log('checko =>>>> ', ft, r)
+              this.form.get('formatted_address').setValue(ft[0].formatted_address);
+              this.form.get('address').setValue(ft[0].formatted_address);
+              isFind = true;
+              place = ft[0];
+            }
+          }
+        });
+    }
+
+    if (!isFind && results && results.length) {
+      this.form.get('formatted_address').setValue(results[0].formatted_address);
+      this.form.get('address').setValue(results[0].formatted_address);
+    }
+
+    return place
+}
+
   formValues(place) {
-    console.log('app shared m=> ', place)
+    // console.log('app shared modal => ', place)
     if (place && place.address_components) {
       for (let i = 0; i < place.address_components.length; i++) {
         let addressType = place.address_components[i].types[0];
@@ -229,6 +260,7 @@ export class SharedModalMapComponent implements OnInit {
     if ("street_number" in this.address) {
       route = this.address.street_number + " " + route
     }
+    
     this.form.patchValue({
       'address': route
     });
@@ -251,7 +283,8 @@ export class SharedModalMapComponent implements OnInit {
   }
 
   OnDrag(event) {
-    console.log('drag', event);
+    // console.log('drag', event);
+    this.disableBtn = true;
     const geocoder = new google.maps.Geocoder();
     this.latitude = event.coords.lat;
     this.longitude = event.coords.lng;
@@ -262,19 +295,21 @@ export class SharedModalMapComponent implements OnInit {
       key: this.config.getConfig('mapKey')
     };
     this.requestService.getLocation(my_location).subscribe((res: any) => {
+      // console.log('onDrag event => ', res)
       // console.log('loc', res);
       if (res.results.length > 0) {
-        let place = res.results.find((product) => {
-          return product.address_components.some((item1) => {
-            return item1.types.some((item) => {
-              return item === 'route';
-              // return item === 'route' || item === 'locality' || item === 'neighborhood' || item === 'administrative_area_level_3' || item === 'administrative_area_level_1';
-            });
-          });
-        });
-        console.log('d', place);
-        this.form.get('formatted_address').setValue(place.formatted_address);
-        this.form.get('address').setValue(place.formatted_address);
+        // let place = res.results.find((product) => {
+        //   return product.address_components.some((item1) => {
+        //     return item1.types.some((item) => {
+        //       return item === 'route';
+        //       // return item === 'route' || item === 'locality' || item === 'neighborhood' || item === 'administrative_area_level_3' || item === 'administrative_area_level_1';
+        //     });
+        //   });
+        // });
+        // console.log('d', place);
+        let place = this.getFormatedAddress(res.results);
+        // this.form.get('formatted_address').setValue(place.formatted_address);
+        // this.form.get('address').setValue(place.formatted_address);
         if (place) {
           this.currentPlace = place;
         }
@@ -283,6 +318,8 @@ export class SharedModalMapComponent implements OnInit {
           this.currentPlace = res.results[0];
         }
 
+        console.log('onDrage place => ', place)
+
         if (!place) {
           return;
         }
@@ -290,74 +327,107 @@ export class SharedModalMapComponent implements OnInit {
           return;
         }
         this.zoom = 12;
+        this.onDoneEvent.emit(this.form.getRawValue());
+        this.disableBtn = false;
       }
     })
   }
 
   report(state) {
-    console.log('Permission ' + state);
+    // console.log('Permission ' + state);
   }
 
 
 
   onDone() {
     this.mapModal.hide();
-    this.formValues(this.currentPlace);
+    // this.formValues(this.currentPlace);
     this.onDoneEvent.emit(this.form.getRawValue());
-    console.log("onDone -> this.currentPlace", this.form.getRawValue())
+    // console.log("onDone -> this.currentPlace", this.form.getRawValue())
   }
 
   hideModal() {
     this.mapModal.hide();
   }
 
+  onChangeAddress() {
+    console.log('check key down=> ')
+    // this.searchAddress();
+  }
+
   searchAddress() {
+    this.disableBtn = true;
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        // types: ["address"]
-        types: ["geocode", "establishment"]
-      });
-      // autocomplete.setComponentRestrictions(
-      //   { 'country': [''] });
-      autocomplete.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          console.log("searchAddress -> place ==== > ", place);
-          this.form.get('formatted_address').setValue(place.formatted_address);
-          if (place.address_components) {
-            for (var i = 0; i < place.address_components.length; i++) {
-              var addressType = place.address_components[i].types[0];
-              if (this.componentForm[addressType]) {
-                var val = place.address_components[i][this.componentForm[addressType]];
-                this.storeAddress(addressType, val);
-              }
+      this.searchPlaces();
+    });
+  }
+
+  searchPlaces() {
+    let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      // types: ["address"]
+      // types: ["geocode", "establishment"]
+          //   types: ["address"],
+       types: ["geocode", "establishment"]
+    });
+
+    // console.log('searchAddress => ', autocomplete)
+    // autocomplete.setComponentRestrictions(
+    //   { 'country': [''] });
+    autocomplete.addListener("place_changed", () => {
+
+      // console.log('searchAddress => ', autocomplete)
+      this.ngZone.run(() => {
+        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+        // console.log("searchAddress -> place ==== > ", place);
+        this.form.get('formatted_address').setValue(place.formatted_address);
+
+        console.log('after comp => ', place)
+        if (place.address_components) {
+          for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (this.componentForm[addressType]) {
+              var val = place.address_components[i][this.componentForm[addressType]];
+              this.storeAddress(addressType, val);
             }
           }
+        }
 
-          let address: any;
-          let route = this.address.route;
-          if ("street_number" in this.address) {
-            route = this.address.street_number + " " + route
-          }
+        let address: any;
+        let route = this.address.route;
+        if ("street_number" in this.address) {
+          route = this.address.street_number + " " + route
+        }
 
 
-          // this.form.patchValue({
-          //   'address': route
-          // });
+        // this.form.patchValue({
+        //   'address': route
+        // });
 
-          // console.log("Address Model", this.address);
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
+        // console.log("Address Model", this.address);
+        //verify result
+      // let p =  this.getFormatedAddress(place);
+      // console.log('check internal address => ', p)
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
 
-          //set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.form.controls['lat'].setValue(this.latitude);
-          this.form.controls['lng'].setValue(this.longitude);
-          this.zoom = 12;
-        });
+        // if (p) {
+        //   this.currentPlace = p;
+        // }
+        // else {
+        //   p = place.address_components[0];
+        //   this.currentPlace = p;
+        // }
+
+        //set latitude, longitude and zoom
+        this.latitude = place.geometry.location.lat();
+        this.longitude = place.geometry.location.lng();
+        this.form.controls['lat'].setValue(this.latitude);
+        this.form.controls['lng'].setValue(this.longitude);
+        console.log('lng => ', this.latitude, this.longitude, this.form.value,place.geometry.location.lat())
+        this.zoom = 12;
+        this.onDoneEvent.emit(this.form.value);
+        this.disableBtn = false;
       });
     });
   }

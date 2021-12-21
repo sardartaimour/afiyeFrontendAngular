@@ -28,7 +28,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="my_profile_setting_input form-group mb-0">
                                                             <input type="text" class="form-control" #search
-                                                                formControlName="address"
+                                                                formControlName="address" (keyup)="onChangeAddress()"
                                                                 placeholder="Searching for current location please wait">
                                                             <a routerLink="/pages/property-list"
                                                                 href="javascript:void(0);">
@@ -70,7 +70,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="hideModal();cancel()">Cancel</button>
-                <button type="button" class="btn btn-success" (click)="onDone()">Done</button>
+                <button type="button" class="btn btn-success" (click)="onDone()" [disabled]="disableBtn">Done</button>
 
             </div>
         </div>

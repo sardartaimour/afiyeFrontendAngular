@@ -123,7 +123,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if (this.editData) {
-      console.log("Edit Data", this.editData);
+      // console.log("Edit Data", this.editData);
       this.data = this.editData;
       this.responseData();
     }
@@ -145,7 +145,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     this.images = this.data['media'];
   }
   public fileChangeEventPropertyFeature(fileInput: any) {
-    console.log("EditProfileComponent -> fileChangeEventProfile -> fileInput", fileInput);
+    // console.log("EditProfileComponent -> fileChangeEventProfile -> fileInput", fileInput);
     this.form.get("feature_media").setValue(fileInput.target.files[0]);
 
   }
@@ -165,7 +165,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
       return;
     }
     
-    console.log("EditProfileComponent -> fileChangeEventProfile -> fileInput", fileInput);
+    // console.log("EditProfileComponent -> fileChangeEventProfile -> fileInput", fileInput);
     const files: FileList = fileInput.target.files;
     if (files.length > 5) {
       this.toasterService.error("you cannot select files more than 5");
@@ -303,7 +303,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     markFormGroupTouched(this.form);
-    console.log("onSubmit -> this.form)", this.form.controls);
+    // console.log("onSubmit -> this.form)", this.form.controls);
     if (!this.form.valid) {
       this.toasterService.error("Please fill All required properties");
       return;
@@ -373,7 +373,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-          console.log(place);
+          // console.log(place);
           if (place.address_components) {
             for (var i = 0; i < place.address_components.length; i++) {
               var addressType = place.address_components[i].types[0];
@@ -386,7 +386,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
           let address: any;
           let route = this.address.route;
-          console.log("PropertyFormComponent -> searchAddress -> route", route)
+          // console.log("PropertyFormComponent -> searchAddress -> route", route)
           if ("street_number" in this.address) {
             route = this.address.street_number + " " + route
           }
@@ -399,7 +399,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
             'address': route
           });
 
-          console.log("Address Model", this.address);
+          // console.log("Address Model", this.address);
           //verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
@@ -433,7 +433,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     }
     else if (addressType == "country") {
       this.address.country = val;
-      console.log("storeAddress -> val", val)
+      // console.log("storeAddress -> val", val)
       this.form.patchValue({
         'country': this.address.country,
       });
@@ -464,21 +464,25 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   }
 
   setLocationOnMap() {
-    console.log('called');
+    // console.log('called');
     this.mapModal.showModal(parseFloat(this.form.get('lat').value), parseFloat(this.form.get('lng').value));
     this.mapModal.setValues(this.form.value);
   }
 
   onDoneEvent(placeData) {
-    let form = this.form.value;
-    console.log("MainPageComponent -> onDoneEvent -> placeData ---- ", placeData);
+    console.log('check in com=> ', placeData)
+    // let form = this.form.value;
+    // console.log("MainPageComponent -> onDoneEvent -> placeData ---- ", placeData);
 
-    if (form['lat'] && form['lng']) {
-      this.getAddress(form['lat'], form['lng']);
+    if (placeData['lat'] && placeData['lng']) {
+      this.form.get('lat').setValue(placeData['lat']);
+      this.form.get('lng').setValue(placeData['lng']);
+      this.getAddress(placeData['lat'], placeData['lng']);
     }
     else {
+      // this.form.patchValue(placeData);
      for (const property in placeData) {
-        if (form.hasOwnProperty(property)) {
+        if (placeData.hasOwnProperty(property)) {
           if (property == "formatted_address") {
             this.form.get("address").setValue(placeData[property]);
           } else {
@@ -487,13 +491,13 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
         }
         this.form.get("address").setValue(placeData["formatted_address"]);
 
-        console.log(`${property}: ${placeData[property]}`);
+        // console.log(`${property}: ${placeData[property]}`);
       }
     }
   }
 
   getAddress(lat: any, lng: any) {
-    console.log('in functions => ', lat, lng);
+    // console.log('in functions => ', lat, lng);
 
     let geocoder = new google.maps.Geocoder();
     let latlng = new google.maps.LatLng(lat, lng);
@@ -505,7 +509,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
       }
       // This is checking to see if the Geoeode Status is OK before proceeding
       if (status == google.maps.GeocoderStatus.OK) {
-        console.log(results);
+        // console.log(results);
         this.getFormatedAddress(results)
         // var address = (results[0].formatted_address);
         // alert(JSON.stringify(address));
@@ -514,22 +518,28 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   }
 
   getFormatedAddress(results) {
-    console.log('Formated Address => ', results)
+    // console.log('Formated Address => ', results)
     let isFind = false;
+    console.log('result => ', results)
     if(results && results.length) {
-        ['neighborhood', 'sublocality', 'locality', 'administrative_area_level_1', 'administrative_area_level_2', 'country', 'route'].forEach(r => {
+        ['neighborhood', 'sublocality', 'locality', 'administrative_area_level_1', 'administrative_area_level_2', 'country', 'plus_code'].forEach(r => {
           
           const ft = results.filter(res => res.types.indexOf(r) !== -1);
           if (ft && ft.length) {
             if (!isFind) {
-              console.log('checko =>>>> ', ft, r)
+              // console.log('checko =>>>> ', ft, r)
               this.form.get('address').setValue(ft[0].formatted_address);
+              isFind = true;
             }
-            isFind = true;
           }
-         
         });
     }
+
+    if (!isFind && results && results.length) {
+      this.form.get('address').setValue(results[0].formatted_address);
+    }
+
+    console.log('formatted => ', this.form.value)
 }
 
 
@@ -546,9 +556,9 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   userFormatter = (x) => x['first_name'] + ' - ' + x['last_name'];
 
   doApiCall(url, data): ObservableInput<any[]> {
-    console.log("SkillFormComponent -> data", data)
+    // console.log("SkillFormComponent -> data", data)
 
-    console.log("SkillFormComponent -> url", url)
+    // console.log("SkillFormComponent -> url", url)
     return <any>this.requestService.sendRequest(url, 'get', data)
       .pipe(
         tap(() => this.searchFailed = false),

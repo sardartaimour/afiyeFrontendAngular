@@ -35,7 +35,8 @@ export class AgentListComponent implements OnInit {
             "pagination": 1,
             "page": this.activePage,
             "per_page": this.limit,
-            "role_id": 3
+            "role_id": 3,
+            "agent_request": 3
         };
         this.getData(params);
     }
@@ -51,7 +52,8 @@ export class AgentListComponent implements OnInit {
             "page": this.activePage,
             "per_page": this.limit,
             "role_id": 3,
-            search: this.search
+            search: this.search,
+            "agent_request": 3
         };
         this.getData(params);
     }
@@ -63,7 +65,8 @@ export class AgentListComponent implements OnInit {
             "pagination": 1,
             "page": this.activePage,
             "per_page": this.limit,
-            "role_id": 3
+            "role_id": 3,
+            "agent_request": 3
         };
         this.getData(params);
     }
@@ -111,6 +114,7 @@ export class AgentListComponent implements OnInit {
         params['page'] = this.activePage;
         params['per_page'] = this.limit;
         params['role_id'] = 3;
+        params['agent_request'] = 3;
         this.getData(params);
     }
 
