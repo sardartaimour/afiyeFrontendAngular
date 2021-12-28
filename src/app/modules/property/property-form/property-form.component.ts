@@ -30,7 +30,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   form: FormGroup;
   @Input() title: string = '';
-  @Input() id;
+  @Input() id = null;
   @Output() formSubmitted = new EventEmitter();
   @Input() data;
   categories = [];
@@ -81,8 +81,8 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     return {
       "address": ["", Validators.required],
       "air_conditioner": [null, Validators.required],
-      "city": ["", Validators.required],
-      "country": ["", Validators.required],
+      // "city": ["", Validators.required],
+      // "country": ["", Validators.required],
       "description": ["", Validators.required],
       "furniture": [null, Validators.required],
       "garage": [null, Validators.required],
@@ -161,6 +161,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   public fileChangeEventProperty(fileInput: any) {
 
     if (!this.id && !this.form.valid) {
+      markFormGroupTouched(this.form);
       this.toasterService.info('Info', 'Please fill form and then upload files');
       return;
     }
@@ -206,6 +207,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   public fileChangeEventPropertyCover(fileInput: any) {
 
     if (!this.id && !this.form.valid) {
+      markFormGroupTouched(this.form);
       this.toasterService.info('Info', 'Please fill form and then upload files');
       return;
     }
@@ -246,7 +248,21 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     formData.append('file', file);
     formData.append('property_id', this.id);
     formData.append('is_featured', is_fetured);
-    this.uploadMedia(formData, 'property', this.id);
+
+    if (!this.id) {
+      let addPropertyStatus = this.addProperty();
+      addPropertyStatus.then((res) => {
+        if (res && res.status) {
+          this.uploadMedia(formData, 'property', this.id);
+        }
+      }).catch((error) => {
+        console.log("Promise rejected with ", error);
+        this.toasterService.error(error['error'] ? error['error']['message'] : error.message, "Error");
+      });
+    }
+    else {
+      this.uploadMedia(formData, 'property', this.id);
+    }
     // this.newFiles.push(formData);
     // this.filesFormData.append('', formData);
     // console.log('files=======> ', this.newFiles)
@@ -303,7 +319,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     markFormGroupTouched(this.form);
-    // console.log("onSubmit -> this.form)", this.form.controls);
+    console.log("onSubmit -> this.form)", this.form.controls);
     if (!this.form.valid) {
       this.toasterService.error("Please fill All required properties");
       return;
@@ -533,6 +549,19 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
             }
           }
         });
+
+
+        // const country = results.filter(res => res.types === 'country');
+        // const city =  results.filter(res => res.types === 'city');
+
+        // if (country && country.length) {
+        //   this.form.get('country').setValue(country[0].formatted_address);
+        // }
+
+        // if (city && city.length) {
+        //   this.form.get('city').setValue(city[0].formatted_address);
+        // }
+
     }
 
     if (!isFind && results && results.length) {

@@ -247,7 +247,8 @@ export class PropertyDetailComponent implements OnInit {
             "page": 1,
             "per_page": 10000,
             "role_id": 3,
-            search: ''
+            search: '',
+            agent_request: 3
         };
         this.requestService.sendRequest(AgentUrl.ALL_GET, 'GET', params).subscribe(res => {
 
