@@ -246,14 +246,17 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   {
     let formData = new FormData();
     formData.append('file', file);
-    formData.append('property_id', this.id);
+    // formData.append('property_id', this.id);
     formData.append('is_featured', is_fetured);
 
     if (!this.id) {
       let addPropertyStatus = this.addProperty();
       addPropertyStatus.then((res) => {
+        console.log('resss=> ', res)
         if (res && res.status) {
-          this.uploadMedia(formData, 'property', this.id);
+          this.id = res.result.data['id'];
+          formData.append('property_id', this.id);
+          this.uploadMedia(formData, 'property', this.id, is_fetured);
         }
       }).catch((error) => {
         console.log("Promise rejected with ", error);
@@ -261,7 +264,8 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
       });
     }
     else {
-      this.uploadMedia(formData, 'property', this.id);
+      formData.append('property_id', this.id);
+      this.uploadMedia(formData, 'property', this.id, is_fetured);
     }
     // this.newFiles.push(formData);
     // this.filesFormData.append('', formData);
@@ -277,7 +281,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   }
 
 
-  uploadMedia(formData, type = 'property', propertyId) {
+  uploadMedia(formData, type = 'property', propertyId, is_fetured="0") {
     this.requestService.sendRequest(PropertyUrls.PROPERTY_MEDIA_ADD, 'post', formData).subscribe(res => {
       console.log("uploadMedia -> res", res)
       this.disableButton = false;
@@ -285,6 +289,9 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
         this.toasterService.success(res.message, 'Success');
 
         if (type == 'property') {
+          if (res.result.data && !res.result.data.hasOwnProperty('is_featured')) {
+            res.result.data['is_featured'] = is_fetured;
+          }
           this.images.push(res.result.data);
           if (!this.id) {
             this.router.navigate(['property/edit/' + propertyId]);
