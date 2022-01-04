@@ -26,6 +26,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   newFiles = [];
   filesFormData = new FormData();
   years: any[] = [];
+  isUploading: boolean = false;
 
 
   form: FormGroup;
@@ -172,7 +173,6 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
       this.toasterService.error("you cannot select files more than 5");
       return;
     }
-
     this.uploadFiles(files, this.id);
     // for (let i = 0; i < files.length; i++) {
     //   let file: File = files[i];
@@ -250,15 +250,19 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     formData.append('is_featured', is_fetured);
 
     if (!this.id) {
+      this.isUploading = true;
       let addPropertyStatus = this.addProperty();
       addPropertyStatus.then((res) => {
         console.log('resss=> ', res)
         if (res && res.status) {
           this.id = res.result.data['id'];
           formData.append('property_id', this.id);
+          this.isUploading = false;
+          this.router.navigate(['property/edit/' + this.id]);
           this.uploadMedia(formData, 'property', this.id, is_fetured);
         }
       }).catch((error) => {
+        this.isUploading = false;
         console.log("Promise rejected with ", error);
         this.toasterService.error(error['error'] ? error['error']['message'] : error.message, "Error");
       });
@@ -326,7 +330,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     markFormGroupTouched(this.form);
-    console.log("onSubmit -> this.form)", this.form.controls);
+    console.log("onSubmit -> this.form)", this.id);
     if (!this.form.valid) {
       this.toasterService.error("Please fill All required properties");
       return;
@@ -373,10 +377,12 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
   }
 
   add(formData) {
+    console.log('add form=> ', this.id);
     this.formSubmitted.emit(formData);
   }
 
   update(formData) {
+    console.log('edit form=> ', this.id);
     this.formSubmitted.emit(formData);
   }
 
@@ -724,5 +730,9 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
               // this.onDoneEvent(address, true);
           });
         });
+    }
+
+    get disabledBtn() {
+      return !this.id && this.isUploading ? true : false; 
     }
 }

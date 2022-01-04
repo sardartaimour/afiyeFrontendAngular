@@ -391,7 +391,8 @@
                                     <div class="col-xl-12 feature-images-item"
                                         *ngFor="let img of images;let i=index">
 
-                                        <img [src]="previewImage(img)" alt="..." style="position: relative;">
+                                        <img [src]="previewImage(img)" alt="..." style="height: 120px;
+                                            width: 130px; position: relative;">
                                         <span *ngIf="isFeatued(img)" class="block block-2">
                                             <div class="ribbon"><span>Featured</span></div>
                                         </span>
@@ -467,7 +468,7 @@
 
                             <div class="col-xl-12">
                                 <div class="my_profile_setting_input mt-3">
-                                    <button class="btn btn2 float-left"
+                                    <button class="btn btn2 float-left" [disabled]="disabledBtn"
                                         type="submit">{{id ? "Update Property" : "Upload Property"}}</button>
                                 </div>
                             </div>
