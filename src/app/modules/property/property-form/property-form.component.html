@@ -414,20 +414,36 @@
                                 <div class="row">
 
                                     <div class="col-xl-6">
-                                        <div class="upload-featur-images" (click)="onChooseFileCoverImage()">
-                                            <input type="file" id="upload-cover-images"
+                                        <!-- <div class="upload-featur-images" (click)="onChooseFileCoverImage()"> -->
+                                        <div class="upload-featur-images">
+
+                                            <afiye-file-picker 
+                                                pickerID="cover_imge_picker"
+                                                label="Upload Cover Image"
+                                                [allowMultiple]="false"
+                                                (change)="onChangeImage($event, true)" class="width-100"></afiye-file-picker>
+
+                                            <!-- <input type="file" id="upload-cover-images"
                                                 (change)="fileChangeEventPropertyCover($event)"
                                                     accept=".gif, .jpg, .png" style="display: none;">
-                                                Upload Cover Image
+                                                Upload Cover Image -->
                                         </div>
                                     </div>
 
                                     <div class="col-xl-6">
-                                        <div class="upload-featur-images" (click)="onChooseFile()">
-                                            <input type="file" multiple id="upload-featur-images"
+                                        <!-- <div class="upload-featur-images" (click)="onChooseFile()"> -->
+                                        <div class="upload-featur-images">
+
+                                            <afiye-file-picker 
+                                                pickerID="other_images_picker"
+                                                label="Upload Images"
+                                                [allowMultiple]="false"
+                                                (change)="onChangeImage($event, false)" class="width-100"></afiye-file-picker>
+
+                                            <!-- <input type="file" multiple id="upload-featur-images"
                                                 (change)="fileChangeEventProperty($event)"
                                                     accept=".gif, .jpg, .png" style="display: none;">
-                                                Upload Images
+                                                Upload Images -->
                                         </div>
                                     </div>
 

@@ -159,7 +159,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     document.getElementById('upload-featur-images').click();
   }
 
-  public fileChangeEventProperty(fileInput: any) {
+  public fileChangeEventProperty(fileInput: any, isFromPicker = false) {
 
     if (!this.id && !this.form.valid) {
       markFormGroupTouched(this.form);
@@ -168,12 +168,16 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     }
     
     // console.log("EditProfileComponent -> fileChangeEventProfile -> fileInput", fileInput);
-    const files: FileList = fileInput.target.files;
-    if (files.length > 5) {
-      this.toasterService.error("you cannot select files more than 5");
-      return;
+    if (!isFromPicker) {
+      const files: FileList = fileInput.target.files;
+      if (!isFromPicker && files.length > 5) {
+        this.toasterService.error("you cannot select files more than 5");
+        return;
+      }
+      this.uploadFiles(files, this.id, isFromPicker);
+    } else {
+      this.uploadFiles(fileInput, this.id, isFromPicker);
     }
-    this.uploadFiles(files, this.id);
     // for (let i = 0; i < files.length; i++) {
     //   let file: File = files[i];
     //   this.images.push(file);
@@ -204,41 +208,50 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  public fileChangeEventPropertyCover(fileInput: any) {
+  public fileChangeEventPropertyCover(fileInput: any, isFromPicker = false) {
 
     if (!this.id && !this.form.valid) {
       markFormGroupTouched(this.form);
       this.toasterService.info('Info', 'Please fill form and then upload files');
       return;
     }
-    const files: FileList = fileInput.target.files;
 
-    if (files.length) {
-      // const ft = this.newFiles.filter(d => d.is_featured != "1" || d.is_featured != 1);
-      // this.newFiles = ft.length ? ft : this.newFiles;
-
-      if (this.id && this.images.length) {
-        this.images.forEach((img, idx)=> {
-          if ([1, "1"].includes(img.is_featured)) {
-            this.deletePropertyImage(img, idx);
-          }
-        });
+    if (!isFromPicker) {
+      const files: FileList = fileInput.target.files;
+      if (files.length) {
+        // const ft = this.newFiles.filter(d => d.is_featured != "1" || d.is_featured != 1);
+        // this.newFiles = ft.length ? ft : this.newFiles;
+  
+        if (this.id && this.images.length) {
+          this.images.forEach((img, idx)=> {
+            if ([1, "1"].includes(img.is_featured)) {
+              this.deletePropertyImage(img, idx);
+            }
+          });
+        }
+        this.filesToUpload(files[0], "1");
       }
-      this.filesToUpload(files[0], "1");
+    } else {
+      this.filesToUpload(fileInput, "1");
     }
+    
   }
 
-  uploadFiles(files, id) {
+  uploadFiles(files, id, isFromPicker = false) {
   
-    for (var i = 0; i < files.length; i++) {
-      // let isfeatured = i === 0 ? "1" : "0";
-      // console.log(files[i]);
-      // let formData = new FormData();
-      // formData.append('file', files[i]);
-      // formData.append('property_id', id);
-      // formData.append('is_featured', isfeatured);
-      // this.uploadMedia(formData, 'property', id);
-      this.filesToUpload(files[i]);
+    if (!isFromPicker) {
+      for (var i = 0; i < files.length; i++) {
+        // let isfeatured = i === 0 ? "1" : "0";
+        // console.log(files[i]);
+        // let formData = new FormData();
+        // formData.append('file', files[i]);
+        // formData.append('property_id', id);
+        // formData.append('is_featured', isfeatured);
+        // this.uploadMedia(formData, 'property', id);
+        this.filesToUpload(files[i]);
+      }
+    } else {
+      this.filesToUpload(files);
     }
   }
 
@@ -734,5 +747,16 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
     get disabledBtn() {
       return !this.id && this.isUploading ? true : false; 
+    }
+
+    onChangeImage(ev, isCoverImage) {
+      console.log('file=> ', ev)
+      if (ev && ev.hasOwnProperty('file')) {
+        if (isCoverImage) {
+          this.fileChangeEventPropertyCover(ev.file, true);
+        } else {
+          this.fileChangeEventProperty(ev.file, true);
+        }
+      }
     }
 }

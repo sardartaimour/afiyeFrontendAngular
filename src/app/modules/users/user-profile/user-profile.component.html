@@ -16,11 +16,20 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="wrap-custom-file">
-                                            <input type="file" name="image1" id="image1"
+
+                                            <span>
+                                                <afiye-file-picker 
+                                                    [showIcon]="true"
+                                                    pickerID="user_profile_imge_picker"
+                                                    label="Upload Photo"
+                                                    [allowMultiple]="false"
+                                                    (change)="onChangeImage($event, true)" class="width-100"></afiye-file-picker>
+                                            </span>
+                                            <!-- <input type="file" name="image1" id="image1"
                                                 (change)="fileChangeEventProfile($event)" accept=".gif, .jpg, .png" />
                                             <label for="image1">
                                                 <span><i class="flaticon-download"></i> Upload Photo </span>
-                                            </label>
+                                            </label> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-xl-6">

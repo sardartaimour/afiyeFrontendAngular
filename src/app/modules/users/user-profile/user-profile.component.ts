@@ -410,4 +410,15 @@ export class UserProfileComponent implements OnInit {
     }
     this.form.get("address").setValue(placeData["formatted_address"]);
   }
+
+  onChangeImage(ev, isCoverImage) {
+    console.log('file=> ', ev)
+    if (ev && ev.hasOwnProperty('file')) {
+      let formData = new FormData();
+      formData.append('file', ev.file);
+      formData.append('type', "1");
+      formData.append('user_id', this.id);
+      this.uploadMedia(formData, 'profile_pic');
+    }
+  }
 }
