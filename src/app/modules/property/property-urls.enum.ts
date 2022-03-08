@@ -14,3 +14,4 @@ export enum PropertyUrls {
     PROPERTY_HOME_PAGE_ALL_GET = "home/page",
     MOST_FAVORITE_PROPERTY = "property/most/favorite"
 }
+
