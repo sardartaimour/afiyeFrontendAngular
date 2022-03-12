@@ -50,10 +50,16 @@ export class RequestService {
 		PropertyUrls.PROPERTY_UNFAVORITE_POST
 	].includes(url);
 
-	const header: HttpHeaders = new HttpHeaders({
+	let header: HttpHeaders = new HttpHeaders({
 		'Content-Type': 'application/json',
 		'Authorization': `Bearer ${this.localStorage.get("token")}`,
 	});
+
+  if (url === CommonUrls.USER_MEDIA_ADD || url === PropertyUrls.PROPERTY_MEDIA_ADD) {
+    header = new HttpHeaders({
+      'Authorization': `Bearer ${this.localStorage.get("token")}`,
+    });
+  }
 
     switch (type.toLowerCase()) {
 		case "get":

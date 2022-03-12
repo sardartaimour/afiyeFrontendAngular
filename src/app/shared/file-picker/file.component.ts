@@ -40,7 +40,7 @@ export class AfiyeFilePickerComponent implements OnDestroy
 		this.maxFileSize = 1;
 		this.progressValue = 0;
 		this.allowMultiple = true;
-		this.allowImageCroping = true;
+		this.allowImageCroping = false;
 		this.pickerID = 'ficker_id';
 		this.allowedFileTypes = ['.jpg', '.png', '.jpeg', '.gif'];
 		this.defaultImg = 'assets/images/profile_details_icon.svg';
