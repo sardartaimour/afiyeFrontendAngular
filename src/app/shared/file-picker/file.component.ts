@@ -89,19 +89,19 @@ export class AfiyeFilePickerComponent implements OnDestroy
 				return;
 			}
 
-			await this.onUploadFile(file, file.name);
+			// await this.onUploadFile(file, file.name);
 
-			// if (this.allowImageCroping) {
-			// 	this.onCropImage(file);
-			// }
+			if (this.allowImageCroping) {
+				await this.onCropImage(file);
+			}
 
-			// else {
-			// 	this.onUploadFile(file, file.name);
-			// }
+			else {
+				await this.onUploadFile(file, file.name);
+			}
 		}
 	}
 
-	onCropImage(file: any): void {
+	async onCropImage(file: any) {
 		const modRef = this.modalService.open(AfiyeImageCropperPickerComponent,
 		{
 			centered: true,
@@ -112,9 +112,9 @@ export class AfiyeFilePickerComponent implements OnDestroy
 
 		modRef.componentInstance.fileEvent = file;
 		modRef.componentInstance.type = file.type;
-		modRef.componentInstance.change.subscribe((croppedFile: any) => {
+		modRef.componentInstance.change.subscribe(async (croppedFile: any) => {
 			if (croppedFile) {
-				// this.onUploadFile(croppedFile, file.name);
+				await this.onUploadFile(croppedFile, file.name);
 			}
 		});
 	}
