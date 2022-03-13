@@ -6,6 +6,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AfiyeImageCropperPickerComponent } from './image-cropper/image.cropper.component';
 import { ToastrService } from 'ngx-toastr';
 
+import imageCompression from 'browser-image-compression';
+
 @Component({
 	selector: 'afiye-file-picker',
 	templateUrl: './file.component.html',
@@ -68,32 +70,34 @@ export class AfiyeFilePickerComponent implements OnDestroy
 		el.click();
 	}
 
-	onFileChange(): void {
+	async onFileChange() {
 		this.progressValue = 0;
 		const fileList: FileList = this.fileInput.nativeElement.files;
 		const file: File = fileList.length > 0 ? fileList[0] : null;
 		console.log('file chec => ', file)
 
 		if (file) {
-			const sizeInMbs = Math.round(file.size / 1024 / 1024);
+			// const sizeInMbs = Math.round(file.size / 1024 / 1024);
 
-			if (this.maxFileSize && sizeInMbs > this.maxFileSize) {
-				this.toastr.error(`File is too big (${sizeInMbs} MB). Max file size: ${this.maxFileSize}MB`, '');
-				return;
-			}
+			// if (this.maxFileSize && sizeInMbs > this.maxFileSize) {
+			// 	this.toastr.error(`File is too big (${sizeInMbs} MB). Max file size: ${this.maxFileSize}MB`, '');
+			// 	return;
+			// }
 
 			if (!this.isValidFileType(file)) {
 				this.toastr.error(`Invalid File Type. Allowed types are ${this.allowedFileTypes}`, '');
 				return;
 			}
 
-			if (this.allowImageCroping) {
-				this.onCropImage(file);
-			}
+			await this.onUploadFile(file, file.name);
 
-			else {
-				this.onUploadFile(file, file.name);
-			}
+			// if (this.allowImageCroping) {
+			// 	this.onCropImage(file);
+			// }
+
+			// else {
+			// 	this.onUploadFile(file, file.name);
+			// }
 		}
 	}
 
@@ -110,18 +114,36 @@ export class AfiyeFilePickerComponent implements OnDestroy
 		modRef.componentInstance.type = file.type;
 		modRef.componentInstance.change.subscribe((croppedFile: any) => {
 			if (croppedFile) {
-				this.onUploadFile(croppedFile, file.name);
+				// this.onUploadFile(croppedFile, file.name);
 			}
 		});
 	}
 
-	onUploadFile(file: any, fileName: string): void 
+	async onUploadFile(file: any, fileName: string) 
 	{
-		console.log('onupload method')
+		console.log('originalFile instanceof Blob', file instanceof Blob); // true
+		console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+
+		const options = {
+			maxSizeMB: this.maxFileSize,
+			maxWidthOrHeight: 1920,
+			useWebWorker: true
+		}
+		try {
+			const compressedFile = await imageCompression(file, options);
+			console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+			console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+
+			this.change.emit({file: compressedFile, fileName: fileName});
+		} catch (error) {
+			console.log(error);
+		}
+
+		// console.log('onupload method')
 		// const formData: FormData = new FormData();
 		// formData.append('logoPath', file, fileName);
 		
-		this.change.emit({file: file, fileName: fileName});
+		// this.change.emit({file: file, fileName: fileName});
 	}
 
 	isValidFileType(file: File): boolean {
