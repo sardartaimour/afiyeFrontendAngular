@@ -413,9 +413,9 @@ export class UserProfileComponent implements OnInit {
 
   onChangeImage(ev, isCoverImage) {
     console.log('file=> ', ev)
-    if (ev && ev.hasOwnProperty('file')) {
+    if (ev && ev.hasOwnProperty('files') && ev.files.length) {
       let formData = new FormData();
-      formData.append('file', ev.file);
+      formData.append('file', ev.files[0].file);
       formData.append('type', "1");
       formData.append('user_id', this.id);
       this.uploadMedia(formData, 'profile_pic');

@@ -73,30 +73,30 @@ export class AfiyeFilePickerComponent implements OnDestroy
 	async onFileChange() {
 		this.progressValue = 0;
 		const fileList: FileList = this.fileInput.nativeElement.files;
-		const file: File = fileList.length > 0 ? fileList[0] : null;
-		console.log('file chec => ', file)
+		const files: FileList | undefined[] = fileList.length > 0 ? fileList : [];
+		console.log('file chec => ', files)
 
-		if (file) {
-			// const sizeInMbs = Math.round(file.size / 1024 / 1024);
+		if (files && files.length) {
 
-			// if (this.maxFileSize && sizeInMbs > this.maxFileSize) {
-			// 	this.toastr.error(`File is too big (${sizeInMbs} MB). Max file size: ${this.maxFileSize}MB`, '');
-			// 	return;
-			// }
-
-			if (!this.isValidFileType(file)) {
+			let isValid = true;
+			for(let i=0; i<files.length; i++) {
+				if (!this.isValidFileType(files[i])) {
+					isValid = false;
+				}
+			}
+			
+			if (!isValid) {
 				this.toastr.error(`Invalid File Type. Allowed types are ${this.allowedFileTypes}`, '');
 				return;
 			}
 
-			// await this.onUploadFile(file, file.name);
-
 			if (this.allowImageCroping) {
+				const file = files[0];
 				await this.onCropImage(file);
 			}
 
 			else {
-				await this.onUploadFile(file, file.name);
+				await this.onUploadFile(files as any[], null, true);
 			}
 		}
 	}
@@ -114,30 +114,52 @@ export class AfiyeFilePickerComponent implements OnDestroy
 		modRef.componentInstance.type = file.type;
 		modRef.componentInstance.change.subscribe(async (croppedFile: any) => {
 			if (croppedFile) {
-				await this.onUploadFile(croppedFile, file.name);
+				await this.onUploadFile([croppedFile], file.name);
 			}
 		});
 	}
 
-	async onUploadFile(file: any, fileName: string) 
+	async onUploadFile(files: any[], fileName: string = null, getName = false) 
 	{
-		console.log('originalFile instanceof Blob', file instanceof Blob); // true
-		console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+		console.log('Start => ', files)
 
-		const options = {
-			maxSizeMB: this.maxFileSize,
-			maxWidthOrHeight: 1920,
-			useWebWorker: true
+		let uFiles = [];
+		for (let f of files) {
+			uFiles.push(f);
 		}
-		try {
-			const compressedFile = await imageCompression(file, options);
-			console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-			console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
 
-			this.change.emit({file: compressedFile, fileName: fileName});
-		} catch (error) {
-			console.log(error);
-		}
+		console.log('Start after => ', uFiles)
+
+		const promises = await uFiles.map(async file => {
+			console.log('originalFile instanceof Blob', file instanceof Blob); // true
+			console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
+
+			const options = {
+				maxSizeMB: this.maxFileSize,
+				maxWidthOrHeight: 1920,
+				useWebWorker: true
+			}
+			try {
+				const compressedFile = await imageCompression(file, options);
+				console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+				console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+
+				// uploadingFiles.push({file: compressedFile, fileName: fileName})
+				// this.change.emit({file: compressedFile, fileName: fileName});
+				if (getName) {
+					fileName = file.name;
+				}
+				return {file: compressedFile, fileName: fileName};
+
+			} catch (error) {
+				console.log(error);
+			}
+		});
+
+
+		const uploadingFiles = await Promise.all(promises);
+		console.log('End => ', uploadingFiles);
+		this.change.emit({files: uploadingFiles});
 
 		// console.log('onupload method')
 		// const formData: FormData = new FormData();

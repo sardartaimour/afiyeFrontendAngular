@@ -638,7 +638,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
   deletePropertyImage(image, i) {
     if (image.hasOwnProperty('media_id')) {
-      this.requestService.sendRequest(PropertyUrls.DELETE_POST, 'delete_with_body', { ids: [image.media_id] }).subscribe(res => {
+      this.requestService.sendRequest(PropertyUrls.DELETE_POST, 'delete_with_body', { ids: JSON.stringify([image.media_id]) }).subscribe(res => {
         if (res.status) {
           this.toasterService.success(res.message, "Success");
           this.images.splice(i, 1)
@@ -751,11 +751,14 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
 
     onChangeImage(ev, isCoverImage) {
       console.log('file=> ', ev)
-      if (ev && ev.hasOwnProperty('file')) {
-        if (isCoverImage) {
-          this.fileChangeEventPropertyCover(ev.file, true);
-        } else {
-          this.fileChangeEventProperty(ev.file, true);
+      if (ev && ev.hasOwnProperty('files') && ev.files.length) {
+
+        for (let file of ev.files) {
+          if (isCoverImage) {
+            this.fileChangeEventPropertyCover(file.file, true);
+          } else {
+            this.fileChangeEventProperty(file.file, true);
+          }
         }
       }
     }

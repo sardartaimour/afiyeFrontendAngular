@@ -20,7 +20,7 @@
         [multiple]="allowMultiple" 
         [accept]="allowedFileTypes || 'images/*'"
         [attr.id]="pickerID"
-        multiple (change)="onFileChange()" />
+        (change)="onFileChange()" />
     
     <!-- <div class="progress-bar" *ngIf="progressValue > 0 && progressValue < 100">
         <span class="upload" [style.width.px]="progressValue"></span>
