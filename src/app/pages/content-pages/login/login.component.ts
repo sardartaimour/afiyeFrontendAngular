@@ -57,9 +57,9 @@ export class LoginComponent implements OnInit {
       if (res && res.status) {
 
         this.toasterService.success('User Login SuccessFully!', 'Login!');
-        this.localStorage.set("token", res.result.data.active_jwt_token);
-        this.localStorage.set("email", res.result.data.email);
-        this.localStorage.setObject("user_details", res.result.data);
+        this.localStorage.set("token", res.data.data.active_jwt_token);
+        this.localStorage.set("email", res.data.data.email);
+        this.localStorage.setObject("user_details", res.data.data);
         this.router.navigate(['pages/main']);
       } else {
         this.toasterService.error(res.message, 'Error');
