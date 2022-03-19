@@ -17,6 +17,8 @@ import { CardUrls } from "src/app/modules/payment/card-urls.enum";
 import { CommonUrls } from "../enums/common-urls.enum";
 import { AuthenticationUrls } from "../enums/authentication-urls.enum";
 import { ReviewUrls } from "../enums/review-urls.enum";
+import { UsersUrls } from "src/app/modules/users/users-urls.enum";
+import { SubscriptionUrls } from "src/app/modules/subscriptions/subscription-urls.enum";
 @Injectable({
   providedIn: "root",
 })
@@ -45,7 +47,7 @@ export class RequestService {
 		PropertyUrls.DELETE_POST, ChatUrls.CHAT_HEADS_GET_ALL, ChatUrls.ADD_POST, ChatUrls.ALL_GET,
 		ChatUrls.DELETE_POST, ChatUrls.Chat_HEAD_CHECK, CardUrls.USER_PROFILE_GET, 
 		AuthenticationUrls.LOGOUT_GET,  CommonUrls.USER_MEDIA_ADD, ReviewUrls.ADD_POST,
-		PropertyUrls.ADD_POST, PropertyUrls.UPDATE_PUT, PropertyUrls.PROPERTY_FAVORITE_POST,
+		PropertyUrls.ADD_POST, PropertyUrls.UPDATE_PUT, CardUrls.UPDATE_PUT, SubscriptionUrls.UPDATE_PUT, UsersUrls.UPDATE_PUT, PropertyUrls.PROPERTY_FAVORITE_POST,
 		PropertyUrls.PROPERTY_MEDIA_ADD, PropertyUrls.DELETE_POST_PROPERTY, PropertyUrls.USER_FAVORITE_PROPERTY,
 		PropertyUrls.PROPERTY_UNFAVORITE_POST
 	].includes(url);

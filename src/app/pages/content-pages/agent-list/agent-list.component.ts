@@ -77,8 +77,8 @@ export class AgentListComponent implements OnInit {
             this.requestService.sendRequest(AgentUrl.ALL_GET, 'GET', params).subscribe(res => {
                 this.showLoading = false;
                 if (res.status) {                    
-                    this.rows = res.result.data;                                       
-                    this.total = res.result.total;
+                    this.rows = res.data.data;                                       
+                    this.total = res.data.total;
                 } else {
                     this.toastrService.error(res.message, "Error");
                 }

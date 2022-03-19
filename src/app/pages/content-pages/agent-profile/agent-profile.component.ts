@@ -63,8 +63,8 @@ export class AgentProfileComponent implements OnInit {
       console.log("AgentProfileComponent -> getData -> res", res)
       this.disableButton = false;
       if (res && res.status) {
-        res.result.data["gender"] = res.result.data["gender"] ? res.result.data["gender"].toString() : res.result.data["gender"];
-        this.user = res.result.data;
+        res.data.data["gender"] = res.data.data["gender"] ? res.data.data["gender"].toString() : res.data.data["gender"];
+        this.user = res.data.data;
         console.log("AgentProfileComponent -> getData -> this.user", this.user)
       } else {
         this.toasterService.error(res.message, 'Error');
@@ -115,7 +115,7 @@ export class AgentProfileComponent implements OnInit {
       this.requestService.sendRequest(ReviewUrls.ALL_GET, 'GET', { user_id: this.id }).subscribe(res => {
         this.showLoadingReviews = false;
         if (res.status) {
-          this.reviews = res.result.data;
+          this.reviews = res.data.data;
         } else {
           this.toasterService.error(res.message, "Error");
         }

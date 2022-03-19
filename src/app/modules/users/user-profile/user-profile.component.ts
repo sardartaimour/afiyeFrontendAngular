@@ -27,6 +27,7 @@ export class UserProfileComponent implements OnInit {
   disableButton = false;
   user = null;
   userProfile = null;
+  image = null;
   @ViewChild("search", { static: false }) public searchElementRef: ElementRef;
   @ViewChild(SharedModalMapComponent, { static: false }) public mapModal: SharedModalMapComponent;
   address: Address = new Address();
@@ -71,12 +72,12 @@ export class UserProfileComponent implements OnInit {
       "address": ["", Validators.required],
       "skype_id": [""],
       "is_licensed_agent": [""],
-      'city': ['', [Validators.required]],
+      'city': [''],
       'zip': ['12345'],
       'country': [''],
       'lat': [],
       'lng': [],
-      'state': ['', [Validators.required]],
+      'state': [''],
       // repeat: [null, Validators.required],
     });
 
@@ -85,12 +86,12 @@ export class UserProfileComponent implements OnInit {
 
   addRequired() {
     this.form.get('address').setValidators(Validators.required);
-    this.form.get('city').setValidators(Validators.required);
-    this.form.get('country').setValidators(Validators.required);
+    // this.form.get('city').setValidators(Validators.required);
+    // this.form.get('country').setValidators(Validators.required);
     // this.form.get('lat').setValidators(Validators.required);
     // this.form.get('lng').setValidators(Validators.required);
     // this.form.get('zip').setValidators();
-    this.form.get('state').setValidators(Validators.required);
+    // this.form.get('state').setValidators(Validators.required);
     this.form.get('address').updateValueAndValidity();
     this.form.get('city').updateValueAndValidity();
     this.form.get('country').updateValueAndValidity();
@@ -128,25 +129,29 @@ export class UserProfileComponent implements OnInit {
       console.log("RegisterComponent -> doRegister -> res", res)
       this.disableButton = false;
       if (res && res.status) {
-        if (res.result.data["gender"]) {
-          res.result.data["gender"] = res.result.data["gender"].toString();
+        console.log('check here firts => ', res)
+        if (res.data.data["gender"]) {
+          res.data.data["gender"] = res.data.data["gender"].toString();
         }
 
-        this.user = res.result.data;
+        this.user = res.data.data;
 
         this.userProfile = this.user['profile_media'];
         if (this.userProfile) {
-          let url = "url(" + this.userProfile.base_path + '/' + this.userProfile.system_name + ')';
+          let img =  this.userProfile.base_path + '/' + this.userProfile.system_name;
+          this.image = img;
+          let url = "url(" + img + ')';
           $('.wrap-custom-file label').css('background-image', url);
+          console.log('check image => ', this.image)
         }
         console.log("UserProfileComponent -> getData -> this.user", this.user)
         this.form.patchValue(this.user);
-        if (res.result.data.agent_request == 1 || res.result.data.agent_request == 4) {
+        if (res.data.data.agent_request == 1 || res.data.data.agent_request == 4) {
           this.form.get("is_licensed_agent").setValue("0");
         } else {
           this.form.get("is_licensed_agent").setValue("1");
         }
-        if (res.result.data.agent_request == 3) {
+        if (res.data.data.agent_request == 3) {
           this.addRequired();
           this.isUserVerified = true;
           this.searchAddress();
@@ -211,22 +216,22 @@ export class UserProfileComponent implements OnInit {
       if (res && res.status) {
         this.toasterService.success(res.message, 'Success');
         if (type == 'profile_pic') {
-          this.userProfile = res.result.data;
+          this.userProfile = res.data.data;
           let url = "url(" + this.userProfile.base_path + '/' + this.userProfile.system_name + ')';
           $('.wrap-custom-file label').css('background-image', url);
           let user = this.localStorage.getObject('user_details');
-          user['profile_media_id'] = res.result.data.id;
-          user['profile_media'] = res.result.data;
+          user['profile_media_id'] = res.data.data.id;
+          user['profile_media'] = res.data.data;
           this.localStorage.setObject("user_details", user);
           this.globalService.userUpdate$.next(user);
         }
 
         if (type == 'agent_certificate') {
-          this.user['agent_certificate_media'] = res.result.data;
+          this.user['agent_certificate_media'] = res.data.data;
           this.handleChange();
         }
         if (type == 'driving_licence') {
-          this.user['licence_media'] = res.result.data;
+          this.user['licence_media'] = res.data.data;
           this.handleChange();
         }
 
@@ -280,8 +285,9 @@ export class UserProfileComponent implements OnInit {
       this.requestService.sendRequest(UsersUrls.UPDATE_PUT, 'POST', form).subscribe(res => {
         this.disableButton = false;
         if (res && res.status) {
-          // this.localStorage.setObject("user_details", res.result.data);
+          this.localStorage.setObject("user_details", res.data.data);
           this.toasterService.success(res.message, 'Success');
+          this.globalService.userUpdate$.next(res.data.data);
         } else {
 
           this.toasterService.error(res.message, 'Error');

@@ -79,8 +79,8 @@ export class PropertyDetailComponent implements OnInit {
         }
         this.requestService.sendRequest(PropertyUrls.SINGLE_GET, 'GET', params).subscribe(res => {
             if (res.status) {
-                this.singleProperty = res.result.data;
-                this.allImages = res.result.data.media;
+                this.singleProperty = res.data.data;
+                this.allImages = res.data.data.media;
                 for (var i = 0; i < this.allImages.length; i++) {
                     if (i == 6)
                         break;
@@ -93,8 +93,8 @@ export class PropertyDetailComponent implements OnInit {
                 this.myLatLng.lng = this.singleProperty.lng;
                 this.map.setCenter({ lat: parseFloat(<any>this.myLatLng.lat), lng: parseFloat(<any>this.myLatLng.lng) });
                 debugger;
-                if (res.result.data && res.result.data.media.length > 0) {
-                    this.selectedImage = res.result.data.media[0];
+                if (res.data.data && res.data.data.media.length > 0) {
+                    this.selectedImage = res.data.data.media[0];
                 }
                 this.handleChange();
             } else {
@@ -253,7 +253,7 @@ export class PropertyDetailComponent implements OnInit {
         this.requestService.sendRequest(AgentUrl.ALL_GET, 'GET', params).subscribe(res => {
 
             if (res.status) {
-                this.agents = res.result.data;
+                this.agents = res.data.data;
                 console.log('Agents');                
                 console.log(this.agents);
                 //this.total = res.result.total;

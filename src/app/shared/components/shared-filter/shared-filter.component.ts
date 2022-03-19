@@ -44,7 +44,7 @@ export class SharedFilterComponent implements OnInit {
   getAttributes() {
     this.requestService.sendRequest(PropertyUrls.ATTRIBUTES_GET, 'GET', {}).subscribe(res => {
       if (res.status) {
-        this.attributes = res.result.data;
+        this.attributes = res.data.data;
         console.log("SharedFilterComponent -> getAttributes -> this.attributes", this.attributes)
         // this.toasterService.success(res.message, "Success");
       } else {

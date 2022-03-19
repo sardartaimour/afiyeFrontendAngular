@@ -15,6 +15,7 @@ import imageCompression from 'browser-image-compression';
 })
 export class AfiyeFilePickerComponent implements OnDestroy 
 {
+	@Input() showImage: boolean;
 	@Input() pickerID: string;
 	@Input() image: string;
 	@Input() label: string;
@@ -43,6 +44,7 @@ export class AfiyeFilePickerComponent implements OnDestroy
 		this.progressValue = 0;
 		this.allowMultiple = true;
 		this.allowImageCroping = false;
+		this.showImage = false;
 		this.pickerID = 'ficker_id';
 		this.allowedFileTypes = ['.jpg', '.png', '.jpeg', '.gif'];
 		this.defaultImg = 'assets/images/profile_details_icon.svg';

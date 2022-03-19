@@ -36,7 +36,7 @@ export class PropertyEditComponent implements OnInit {
       this.subscription.push(
         this.requestService.sendRequest(PropertyUrls.SINGLE_GET, 'get', { id: this.id }).subscribe(res => {
           if (res.status) {
-            this.editData = res.result.data;
+            this.editData = res.data.data;
             console.log('this.editData', this.editData);
           } else {
             this.toastrService.error(res.message, "Error");

@@ -268,7 +268,7 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
       addPropertyStatus.then((res) => {
         console.log('resss=> ', res)
         if (res && res.status) {
-          this.id = res.result.data['id'];
+          this.id = res.data.data['id'];
           formData.append('property_id', this.id);
           this.isUploading = false;
           this.router.navigate(['property/edit/' + this.id]);
@@ -306,10 +306,10 @@ export class PropertyFormComponent implements OnInit, AfterViewInit {
         this.toasterService.success(res.message, 'Success');
 
         if (type == 'property') {
-          if (res.result.data && !res.result.data.hasOwnProperty('is_featured')) {
-            res.result.data['is_featured'] = is_fetured;
+          if (res.data.data && !res.data.data.hasOwnProperty('is_featured')) {
+            res.data.data['is_featured'] = is_fetured;
           }
-          this.images.push(res.result.data);
+          this.images.push(res.data.data);
           if (!this.id) {
             this.router.navigate(['property/edit/' + propertyId]);
           }
