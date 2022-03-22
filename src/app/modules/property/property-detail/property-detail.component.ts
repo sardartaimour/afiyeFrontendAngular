@@ -253,7 +253,7 @@ export class PropertyDetailComponent implements OnInit {
         this.requestService.sendRequest(AgentUrl.ALL_GET, 'GET', params).subscribe(res => {
 
             if (res.status) {
-                this.agents = res.data.data;
+                this.agents = res.data.dat;
                 console.log('Agents');                
                 console.log(this.agents);
                 //this.total = res.result.total;
